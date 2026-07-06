@@ -243,22 +243,38 @@
 
   .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-.hero-img {
+  .hero-img {
     position: relative;
-    background-image: url('hero.png');
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
   }
 
-  /* Creates the smooth dark transition from the text side into the image */
-  .hero-img::before {
+  .hero-img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #111 50%, #0a0a0a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .hero-img-placeholder::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, var(--black) 0%, transparent 60%);
-    pointer-events: none;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(245,184,0,0.05), transparent);
+  }
+
+  .hero-people {
+    font-size: 120px;
+    opacity: 0.15;
+    user-select: none;
   }
 
   /* STATS */
@@ -1046,6 +1062,250 @@
   .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
   .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
   .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
+
+  /* ============ MOBILE NAV TOGGLE ============ */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 200;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--black);
+    z-index: 99;
+    padding: 24px 24px 32px;
+    overflow-y: auto;
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .mobile-nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-nav-links li { border-bottom: 1px solid #222; }
+
+  .mobile-nav-links a {
+    display: block;
+    padding: 16px 4px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .mobile-nav-phone {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 20px;
+  }
+
+  .mobile-btn-trial {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  /* ============================================================
+     RESPONSIVE BREAKPOINTS
+     ============================================================ */
+
+  /* TABLET */
+  @media (max-width: 1024px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 18px; }
+    .nav-links a { font-size: 12px; }
+
+    .hero-content { padding: 50px 40px; }
+    .hero h1 { font-size: 48px; }
+
+    .stats-bar { padding: 24px 30px; }
+
+    .transformations, .why-choose, .facility, .membership, .reviews, .faq {
+      padding: 50px 40px;
+    }
+
+    .transform-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .facility { grid-template-columns: 240px 1fr; gap: 40px; }
+    .facility-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .membership { grid-template-columns: 1fr; gap: 30px; }
+    .plans-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .reviews { grid-template-columns: 1fr; gap: 24px; }
+    .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-label { padding-top: 0; }
+    .reviews-aggregate { justify-self: start; width: 200px; }
+
+    .faq { grid-template-columns: 1fr; }
+
+    .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  }
+
+  /* MOBILE (large phones / small tablets) */
+  @media (max-width: 767px) {
+    body { overflow-x: hidden; }
+
+    /* NAV */
+    nav { padding: 0 16px; height: 60px; }
+    .nav-links { display: none; }
+    .nav-phone { display: none; }
+    .btn-trial { display: none; }
+    .nav-toggle { display: flex; }
+    .mobile-menu { display: block; top: 60px; }
+    .nav-right { gap: 0; }
+
+    /* HERO */
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+    .hero-content {
+      padding: 40px 20px 32px;
+      gap: 18px;
+      order: 1;
+    }
+    .hero-badge { font-size: 10px; padding: 5px 12px; }
+    .hero h1 { font-size: 34px; letter-spacing: -0.5px; }
+    .hero p { font-size: 14px; max-width: 100%; }
+    .hero-btns { flex-direction: column; width: 100%; }
+    .btn-primary, .btn-outline {
+      width: 100%;
+      justify-content: center;
+      padding: 14px 20px;
+      font-size: 13px;
+    }
+    .hero-img { order: 2; min-height: 200px; }
+    .hero-people { font-size: 80px; }
+
+    /* STATS BAR */
+    .stats-bar {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 20px 16px;
+      gap: 16px 12px;
+    }
+    .stat-item {
+      padding: 0 8px;
+      gap: 10px;
+      border-right: none;
+    }
+    .stat-item:nth-child(odd) { border-right: 1px solid #eee; }
+    .stat-icon { font-size: 22px; }
+    .stat-info h3 { font-size: 20px; }
+    .stat-info p { font-size: 11px; }
+
+    /* SECTION HEADERS */
+    .section-title { font-size: 28px; }
+    .section-label { font-size: 10px; letter-spacing: 2px; }
+
+    /* TRANSFORMATIONS */
+    .transformations { padding: 44px 16px; }
+    .transform-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 28px;
+    }
+    .transform-images { height: 160px; }
+    .transform-info { padding: 26px 16px 16px; }
+
+    /* WHY CHOOSE */
+    .why-choose { padding: 44px 16px; }
+    .why-grid { grid-template-columns: repeat(2, 1fr); margin-top: 32px; }
+    .why-item { padding: 24px 14px; }
+
+    /* FACILITY */
+    .facility {
+      grid-template-columns: 1fr;
+      padding: 44px 16px;
+      gap: 24px;
+    }
+    .facility-text h2 { font-size: 32px; }
+    .facility-grid { grid-template-columns: repeat(2, 1fr); }
+    .facility-item { height: 130px; }
+
+    /* MEMBERSHIP */
+    .membership { padding: 44px 16px; }
+    .membership-text h2 { font-size: 30px; }
+    .plans-grid { grid-template-columns: 1fr; gap: 16px; }
+    .plan-card.popular { transform: none; }
+    .plan-card.popular:hover { transform: translateY(-4px); }
+
+    /* REVIEWS */
+    .reviews { padding: 44px 16px; }
+    .reviews-grid { grid-template-columns: 1fr; gap: 12px; }
+    .reviews-aggregate { width: 100%; justify-self: stretch; }
+
+    /* FAQ */
+    .faq { padding: 44px 16px; gap: 32px; }
+    .cta-panel { padding: 36px 24px; margin: 0 -16px; }
+    .cta-panel h2 { font-size: 28px; }
+
+    /* FOOTER */
+    footer { padding: 40px 16px 24px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .footer-logo { grid-column: 1 / -1; }
+    .footer-bottom {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+
+  /* SMALL MOBILE */
+  @media (max-width: 420px) {
+    .hero h1 { font-size: 28px; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .stat-item:nth-child(odd) { border-right: none; }
+    .stat-item { border-bottom: 1px solid #eee; padding-bottom: 12px; }
+    .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .why-grid { grid-template-columns: 1fr; }
+    .facility-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -1072,7 +1332,23 @@
     <div class="nav-phone">📞 01711-222-333</div>
     <a class="btn-trial" href="#">FREE TRIAL BOOK →</a>
   </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <ul class="mobile-nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About Us</a></li>
+    <li><a href="#">Programs</a></li>
+    <li><a href="#">Membership</a></li>
+    <li><a href="#">Success Stories</a></li>
+    <li><a href="#">Blog</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="mobile-nav-phone">📞 01711-222-333</div>
+  <a class="btn-trial mobile-btn-trial" href="#">FREE TRIAL BOOK →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1085,7 +1361,11 @@
       <a class="btn-outline" href="#">▶ SEE MEMBER RESULTS</a>
     </div>
   </div>
-  <div class="hero-img"></div>
+  <div class="hero-img">
+    <div class="hero-img-placeholder">
+      <span class="hero-people">💪</span>
+    </div>
+  </div>
 </section>
 
 <!-- STATS BAR -->
@@ -1461,6 +1741,25 @@
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!isOpen) el.classList.add('open');
   }
+
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mobile-nav-links a, .mobile-btn-trial').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
 </script>
 
 </body>
