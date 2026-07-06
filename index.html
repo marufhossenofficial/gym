@@ -65,19 +65,21 @@ background-repeat:no-repeat;
 /* Show more of the right side on desktop */
 background-position:center center;
 
-}.hero::before{content:"";position;inset:0;
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
 
-background:
-linear-gradient(
-    90deg,
-    rgba(0,0,0,.82) 0%,
-    rgba(0,0,0,.60) 35%,
-    rgba(0,0,0,.20) 65%,
-    rgba(0,0,0,0) 100%
-);
+    background:linear-gradient(
+        90deg,
+        rgba(0,0,0,.82) 0%,
+        rgba(0,0,0,.60) 35%,
+        rgba(0,0,0,.20) 65%,
+        rgba(0,0,0,0) 100%
+    );
 
+    pointer-events:none;
 }
-
 .hero-content{position;z-index:2;
 
 width:100%;
@@ -352,7 +354,10 @@ padding-right:20px;
 
 /* TABLET */@media (max-width: 1024px) {nav { padding: 0 24px; }.nav-links { gap: 18px; }.nav-links a { font-size: 12px; }
 
-.hero-content { padding: 50px 40px; }
+.hero-content{
+    padding-left:40px;
+    padding-right:20px;
+}
 .hero h1 { font-size: 48px; }
 
 .stats-bar { padding: 24px 30px; }
@@ -395,6 +400,7 @@ nav { padding: 0 16px; height: 60px; }
 /* HERO */
 
 .hero{min-height:700px;
+      background-color:#000;
 
 background-size:cover;
 
