@@ -368,12 +368,14 @@
     aspect-ratio: 4 / 5;
     overflow: hidden;
     background:#111;
+    display:flex;
 }
 
 .transform-image{
     width:100%;
     height:100%;
     object-fit:cover;
+    object-position:center top;
     display:block;
     transition:.35s;
 }
@@ -384,7 +386,7 @@
 
   .transform-badge {
     position: absolute;
-    bottom: -18px;
+    bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--black);
