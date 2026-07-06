@@ -11,13 +11,15 @@
     --gold-dark: #d9a200;
     --black: #0a0a0a;
     --dark: #111111;
-    --dark2: #1a1a1a;
+    --dark2: #161616;
     --dark3: #222222;
     --white: #ffffff;
     --gray: #888888;
-    --light-gray: #f5f5f5;
+    --light-gray: #f9f9f9;
     --green: #2ecc71;
     --text: #cccccc;
+    --card-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    --premium-shadow: 0 20px 40px rgba(0,0,0,0.3);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,6 +29,7 @@
     background: var(--white);
     color: var(--black);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* NAV */
@@ -36,28 +39,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    height: 72px;
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
 
   .nav-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     text-decoration: none;
   }
 
   .logo-icon {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     background: var(--gold);
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 900;
     color: var(--black);
     font-family: 'Barlow Condensed', sans-serif;
@@ -72,7 +76,7 @@
   .logo-text span:first-child {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
-    font-size: 18px;
+    font-size: 20px;
     color: var(--white);
     letter-spacing: 2px;
   }
@@ -82,11 +86,12 @@
     color: var(--gray);
     letter-spacing: 3px;
     text-transform: uppercase;
+    margin-top: 2px;
   }
 
   .nav-links {
     display: flex;
-    gap: 28px;
+    gap: 32px;
     list-style: none;
   }
 
@@ -94,36 +99,39 @@
     color: var(--white);
     text-decoration: none;
     font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    transition: color 0.2s;
+    transition: color 0.2s, opacity 0.2s;
+    opacity: 0.85;
   }
 
-  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover { color: var(--gold); opacity: 1; }
 
   .nav-right {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
   }
 
   .nav-phone {
     color: var(--gold);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
     display: flex;
     align-items: center;
     gap: 6px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.5px;
   }
 
   .btn-trial {
     background: var(--gold);
     color: var(--black);
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 14px;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -131,85 +139,106 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: background 0.2s, transform 0.2s;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
   }
 
-  .btn-trial:hover { background: var(--gold-dark); transform: translateX(2px); }
+  .btn-trial:hover { background: var(--gold-dark); transform: translateY(-1px); box-shadow: 0 4px 15px rgba(245,184,0,0.3); }
 
-  /* HERO */
+  /* HERO (Premium Background Image Variant) */
   .hero {
     background: var(--black);
-    min-height: 550px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    min-height: 650px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
   }
 
-  .hero::before {
-    content: '';
+  /* Full background image across desktop & mobile */
+  .hero-bg-image {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 30% 50%, rgba(245,184,0,0.08) 0%, transparent 60%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    z-index: 1;
+  }
+
+  /* Dark cinematic overlay mask to make text pop perfectly */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.6) 100%);
+    z-index: 2;
     pointer-events: none;
   }
 
   .hero-content {
-    padding: 70px 60px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 80px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 24px;
     position: relative;
-    z-index: 2;
+    z-index: 3;
   }
 
   .hero-badge {
     display: inline-block;
     background: rgba(245,184,0,0.12);
-    border: 1px solid rgba(245,184,0,0.3);
+    border: 1px solid rgba(245,184,0,0.4);
     color: var(--gold);
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 6px 14px;
+    padding: 6px 16px;
     width: fit-content;
+    border-radius: 2px;
   }
 
   .hero h1 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 64px;
+    font-size: 72px;
     font-weight: 900;
     color: var(--white);
-    line-height: 1.1;
+    line-height: 1.05;
     text-transform: uppercase;
     letter-spacing: -1px;
+    max-width: 750px;
   }
 
-  .hero h1 .highlight { color: var(--gold); }
+  .hero h1 .highlight { 
+    color: var(--gold); 
+    text-shadow: 0 0 40px rgba(245,184,0,0.2);
+  }
 
   .hero p {
-    color: var(--text);
-    font-size: 16px;
+    color: #e0e0e0;
+    font-size: 18px;
     line-height: 1.6;
-    max-width: 440px;
+    max-width: 520px;
   }
 
   .hero-btns {
     display: flex;
-    gap: 14px;
+    gap: 16px;
     flex-wrap: wrap;
+    margin-top: 8px;
   }
 
   .btn-primary {
     background: var(--gold);
     color: var(--black);
-    padding: 14px 28px;
+    padding: 16px 32px;
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 800;
+    font-size: 16px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     border: none;
@@ -217,85 +246,65 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     text-decoration: none;
   }
 
-  .btn-primary:hover { background: var(--gold-dark); transform: translateX(3px); }
+  .btn-primary:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245,184,0,0.35); }
 
   .btn-outline {
-    background: transparent;
+    background: rgba(255,255,255,0.03);
     color: var(--white);
-    padding: 14px 28px;
+    padding: 16px 32px;
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 800;
+    font-size: 16px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid rgba(255,255,255,0.4);
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     text-decoration: none;
+    backdrop-filter: blur(4px);
   }
 
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); background: rgba(245,184,0,0.05); }
 
-  .hero-img {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-
-  /* Subtle vignette overlay on image for standard cinematic style matching the theme */
-  .hero-img::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, var(--black) 0%, transparent 20%, transparent 80%, var(--black) 100%);
-    pointer-events: none;
-  }
-
-  /* STATS */
+  /* STATS BAR */
   .stats-bar {
     background: var(--white);
     border-bottom: 1px solid #eee;
-    padding: 28px 60px;
+    padding: 32px 40px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.03);
+    margin-top: -40px;
+    background: #ffffff;
+    border-radius: 4px;
   }
 
   .stat-item {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 0 20px;
+    gap: 18px;
+    padding: 0 24px;
     border-right: 1px solid #eee;
   }
 
   .stat-item:last-child { border-right: none; }
 
-  .stat-icon {
-    font-size: 28px;
-    opacity: 0.7;
-  }
+  .stat-icon { font-size: 32px; }
 
   .stat-info h3 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 800;
     color: var(--black);
     line-height: 1;
@@ -304,81 +313,90 @@
   .stat-info p {
     font-size: 13px;
     color: var(--gray);
-    margin-top: 2px;
+    margin-top: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   /* SECTION HEADER */
   .section-label {
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--gray);
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .section-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 42px;
-    font-weight: 800;
+    font-size: 46px;
+    font-weight: 900;
     text-align: center;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
   }
 
   .section-title .highlight { color: var(--gold); }
 
   /* TRANSFORMATIONS */
   .transformations {
-    padding: 70px 60px;
+    padding: 90px 40px;
     background: var(--white);
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   .transform-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 280px;
-    gap: 20px;
-    margin-top: 40px;
+    grid-template-columns: repeat(3, 1fr) 300px;
+    gap: 24px;
+    margin-top: 48px;
   }
 
   .transform-card {
-    border: 1px solid #eee;
+    background: #ffffff;
+    border: 1px solid #eef0f2;
     overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--card-shadow);
+    border-radius: 4px;
   }
 
   .transform-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    border-color: #e0e5e9;
   }
 
   .transform-images {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 200px;
-    background: #1a1a1a;
+    height: 220px;
+    background: #111;
     position: relative;
   }
 
   .transform-before, .transform-after {
-    background: linear-gradient(135deg, #222, #333);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
-    opacity: 0.5;
+    font-size: 44px;
+    opacity: 0.6;
   }
 
   .transform-badge {
     position: absolute;
-    bottom: -18px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--black);
     color: var(--white);
-    width: 52px;
-    height: 52px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
@@ -389,69 +407,31 @@
     line-height: 1;
     z-index: 2;
     border: 3px solid var(--gold);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
 
-  .transform-badge .badge-num {
-    font-size: 16px;
-    color: var(--gold);
-  }
+  .transform-badge .badge-num { font-size: 18px; color: var(--gold); }
+  .transform-badge .badge-unit { font-size: 8px; color: #aaa; letter-spacing: 0.5px; }
 
-  .transform-badge .badge-unit {
-    font-size: 8px;
-    color: var(--gray);
-  }
-
-  .transform-info {
-    padding: 28px 18px 18px;
-  }
-
-  .transform-info h4 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    text-transform: uppercase;
-  }
-
-  .transform-info .role {
-    font-size: 12px;
-    color: var(--gray);
-    margin-bottom: 8px;
-  }
-
-  .transform-info p {
-    font-size: 13px;
-    color: #555;
-    line-height: 1.5;
-  }
+  .transform-info { padding: 32px 20px 24px; text-align: center; }
+  .transform-info h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 19px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .transform-info .role { font-size: 13px; color: var(--gray); margin-bottom: 12px; font-weight: 500; }
+  .transform-info p { font-size: 14px; color: #444; line-height: 1.5; }
 
   .testimonial-card {
     background: var(--black);
     color: var(--white);
-    padding: 30px;
+    padding: 36px 28px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border-radius: 4px;
+    box-shadow: var(--premium-shadow);
   }
 
-  .quote-mark {
-    font-size: 60px;
-    color: var(--gold);
-    line-height: 0.7;
-    font-family: Georgia, serif;
-  }
-
-  .testimonial-card p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text);
-    margin: 16px 0;
-  }
-
-  .testimonial-author {
-    font-size: 13px;
-    color: var(--gold);
-    font-weight: 600;
-  }
+  .quote-mark { font-size: 64px; color: var(--gold); line-height: 0.6; font-family: Georgia, serif; }
+  .testimonial-card p { font-size: 16px; line-height: 1.7; color: #e0e0e0; margin: 20px 0; font-weight: 500; font-style: italic; }
+  .testimonial-author { font-size: 14px; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
   .btn-link {
     display: inline-flex;
@@ -459,609 +439,168 @@
     gap: 8px;
     color: var(--gold);
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
     text-decoration: none;
     margin-top: 20px;
     border: 1px solid var(--gold);
-    padding: 8px 16px;
-    transition: all 0.2s;
+    padding: 10px 20px;
+    transition: all 0.2s ease;
+    justify-content: center;
   }
 
   .btn-link:hover { background: var(--gold); color: var(--black); }
 
   /* WHY CHOOSE */
-  .why-choose {
-    background: var(--black);
-    padding: 70px 60px;
-  }
-
+  .why-choose-outer { background: var(--black); width: 100%; }
+  .why-choose { padding: 90px 40px; max-width: 1200px; margin: 0 auto; }
   .why-choose .section-title { color: var(--white); }
-  .why-choose .section-label { color: var(--gray); }
+  .why-choose .section-label { color: #555; }
 
   .why-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 1px;
-    margin-top: 50px;
-    background: #222;
+    gap: 16px;
+    margin-top: 54px;
   }
 
   .why-item {
     background: var(--dark);
-    padding: 30px 20px;
+    padding: 36px 24px;
     text-align: center;
-    transition: background 0.3s;
+    transition: all 0.25s ease;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.02);
   }
 
-  .why-item:hover { background: var(--dark2); }
-
-  .why-icon {
-    font-size: 32px;
-    margin-bottom: 14px;
-    display: block;
-  }
-
-  .why-item h4 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-
-  .why-item p {
-    font-size: 12px;
-    color: var(--text);
-    line-height: 1.6;
-  }
+  .why-item:hover { background: var(--dark2); transform: translateY(-3px); border-color: rgba(245,184,0,0.2); }
+  .why-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+  .why-item h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .why-item p { font-size: 13px; color: #b0b0b0; line-height: 1.6; }
 
   /* FACILITY */
   .facility {
-    padding: 70px 60px;
+    padding: 90px 40px;
     background: var(--white);
     display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 60px;
+    grid-template-columns: 340px 1fr;
+    gap: 64px;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  .facility-text h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 8px;
-  }
-
-  .facility-text h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 48px;
-    font-weight: 900;
-    text-transform: uppercase;
-    line-height: 1;
-    margin-bottom: 20px;
-  }
-
+  .facility-text h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 8px; }
+  .facility-text h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 900; text-transform: uppercase; line-height: 1.05; margin-bottom: 24px; }
   .facility-text h2 .highlight { color: var(--gold); }
+  .facility-text p { color: #444; font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
 
-  .facility-text p {
-    color: #555;
-    font-size: 15px;
-    line-height: 1.7;
-    margin-bottom: 28px;
-  }
-
-  .facility-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-
-  .facility-item {
-    position: relative;
-    height: 200px;
-    background: var(--dark);
-    overflow: hidden;
-    cursor: pointer;
-  }
-
-  .facility-item .facility-bg {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #1a1a1a, #333);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    opacity: 0.4;
-    transition: transform 0.4s;
-  }
-
-  .facility-item:hover .facility-bg { transform: scale(1.05); }
-
-  .facility-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px;
-    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-    color: var(--white);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-align: center;
-  }
+  .facility-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .facility-item { position: relative; height: 240px; background: var(--dark); overflow: hidden; cursor: pointer; border-radius: 4px; }
+  .facility-item .facility-bg { width: 100%; height: 100%; background: linear-gradient(135deg, #161616, #282828); display: flex; align-items: center; justify-content: center; font-size: 56px; opacity: 0.5; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+  .facility-item:hover .facility-bg { transform: scale(1.08); opacity: 0.7; }
+  .facility-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 12px; background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4) 60%, transparent); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; text-align: center; }
 
   /* MEMBERSHIP */
-  .membership {
-    padding: 70px 60px;
-    background: var(--light-gray);
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 60px;
-    align-items: start;
-  }
-
-  .membership-text h3 {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 8px;
-  }
-
-  .membership-text h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 44px;
-    font-weight: 900;
-    text-transform: uppercase;
-    line-height: 1.05;
-    margin-bottom: 16px;
-  }
-
+  .membership-outer { background: var(--light-gray); width: 100%; }
+  .membership { padding: 90px 40px; display: grid; grid-template-columns: 300px 1fr; gap: 64px; align-items: start; max-width: 1200px; margin: 0 auto; }
+  .membership-text h3 { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 8px; }
+  .membership-text h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 48px; font-weight: 900; text-transform: uppercase; line-height: 1.05; margin-bottom: 20px; }
   .membership-text h2 .highlight { color: var(--gold); }
+  .membership-text p { color: #555; font-size: 15px; line-height: 1.7; margin-bottom: 32px; }
 
-  .membership-text p {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.7;
-    margin-bottom: 24px;
-  }
-
-  .plans-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-
-  .plan-card {
-    background: var(--white);
-    border: 1px solid #ddd;
-    padding: 28px;
-    position: relative;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .plan-card.popular {
-    border-color: var(--gold);
-    transform: translateY(-8px);
-    box-shadow: 0 20px 60px rgba(245,184,0,0.15);
-  }
-
-  .plan-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-  }
-
-  .plan-card.popular:hover { transform: translateY(-12px); }
-
-  .popular-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--gold);
-    color: var(--black);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 4px 14px;
-  }
-
-  .plan-icon-wrap {
-    width: 48px;
-    height: 48px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    margin-bottom: 14px;
-  }
-
-  .plan-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 24px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .plan-desc {
-    font-size: 12px;
-    color: var(--gray);
-    margin-bottom: 20px;
-  }
-
-  .plan-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .plan-features li {
-    font-size: 13px;
-    color: #444;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .plan-features li::before {
-    content: '✓';
-    color: var(--green);
-    font-weight: 700;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
+  .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .plan-card { background: var(--white); border: 1px solid #e0e4e8; padding: 36px 28px; position: relative; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 4px; box-shadow: var(--card-shadow); }
+  .plan-card.popular { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 25px 50px rgba(245,184,0,0.12); }
+  .plan-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
+  .plan-card.popular:hover { transform: translateY(-14px); box-shadow: 0 25px 50px rgba(245,184,0,0.18); }
+  .popular-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 5px 18px; border-radius: 2px; }
+  .plan-icon-wrap { width: 52px; height: 52px; background: rgba(245,184,0,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; color: var(--gold-dark); }
+  .plan-card.popular .plan-icon-wrap { background: var(--gold); color: var(--black); }
+  .plan-name { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+  .plan-desc { font-size: 13px; color: var(--gray); margin-bottom: 24px; font-weight: 500; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .plan-features li { font-size: 14px; color: #333; display: flex; align-items: center; gap: 10px; font-weight: 500; }
+  .plan-features li::before { content: '✓'; color: var(--green); font-weight: 900; font-size: 16px; flex-shrink: 0; }
 
   /* REVIEWS */
-  .reviews {
-    background: var(--black);
-    padding: 60px;
-    display: grid;
-    grid-template-columns: 160px 1fr 160px;
-    gap: 30px;
-    align-items: start;
-  }
+  .reviews-outer { background: var(--black); width: 100%; }
+  .reviews { padding: 80px 40px; display: grid; grid-template-columns: 180px 1fr 180px; gap: 32px; align-items: start; max-width: 1200px; margin: 0 auto; }
+  .reviews-label { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); padding-top: 12px; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .review-card { background: var(--dark2); padding: 24px; border: 1px solid rgba(255,255,255,0.04); border-radius: 4px; }
+  .stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+  .google-g { float: right; font-size: 22px; font-weight: 800; color: #4285F4; font-family: 'Barlow Condensed', sans-serif; }
+  .review-card p { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 14px; }
+  .reviewer { font-size: 13px; color: var(--gold); font-weight: 600; letter-spacing: 0.5px; }
+  .reviews-aggregate { background: var(--gold); padding: 28px 20px; text-align: center; border-radius: 4px; box-shadow: var(--premium-shadow); }
+  .agg-score { font-family: 'Barlow Condensed', sans-serif; font-size: 56px; font-weight: 900; color: var(--black); line-height: 1; }
+  .agg-stars { font-size: 18px; color: var(--black); margin: 6px 0; }
+  .agg-reviews { font-size: 12px; color: var(--black); opacity: 0.8; font-weight: 600; }
 
-  .reviews-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    padding-top: 10px;
-  }
+  /* FAQ & CTA */
+  .faq-cta-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+  .faq-item { background: var(--light-gray); border-radius: 4px; border: 1px solid #eee; overflow: hidden; }
+  .faq-question { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 15px; transition: color 0.2s ease; }
+  .faq-question:hover { color: var(--gold-dark); }
+  .faq-icon { font-size: 22px; color: var(--gold); font-weight: 400; transition: transform 0.3s ease; }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease; font-size: 14px; color: #555; line-height: 1.7; padding: 0 24px; }
+  .faq-item.open { border-color: rgba(245,184,0,0.3); background: #ffffff; box-shadow: var(--card-shadow); }
+  .faq-item.open .faq-answer { max-height: 140px; padding: 0 24px 20px; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--black); }
 
-  .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-  }
-
-  .review-card {
-    background: var(--dark2);
-    padding: 20px;
-    border: 1px solid #2a2a2a;
-  }
-
-  .stars {
-    color: var(--gold);
-    font-size: 13px;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-  }
-
-  .google-g {
-    float: right;
-    font-size: 20px;
-    font-weight: 700;
-    color: #4285F4;
-    font-family: 'Barlow Condensed', sans-serif;
-  }
-
-  .review-card p {
-    font-size: 12px;
-    color: var(--text);
-    line-height: 1.6;
-    margin-bottom: 10px;
-  }
-
-  .reviewer {
-    font-size: 12px;
-    color: var(--gold);
-    font-weight: 600;
-  }
-
-  .reviews-aggregate {
-    background: var(--gold);
-    padding: 24px 20px;
-    text-align: center;
-  }
-
-  .agg-score {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 52px;
-    font-weight: 900;
-    color: var(--black);
-    line-height: 1;
-  }
-
-  .agg-stars {
-    font-size: 16px;
-    color: var(--black);
-    margin: 4px 0;
-  }
-
-  .agg-reviews {
-    font-size: 11px;
-    color: var(--black);
-    opacity: 0.7;
-  }
-
-  /* FAQ */
-  .faq {
-    padding: 60px;
-    background: var(--white);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
-  }
-
-  .faq-list { display: flex; flex-direction: column; gap: 1px; }
-
-  .faq-item {
-    background: var(--light-gray);
-    border-bottom: 1px solid #e0e0e0;
-    overflow: hidden;
-  }
-
-  .faq-question {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
-    transition: color 0.2s;
-  }
-
-  .faq-question:hover { color: var(--gold); }
-
-  .faq-icon {
-    font-size: 20px;
-    color: var(--gold);
-    font-weight: 300;
-    transition: transform 0.3s;
-  }
-
-  .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s;
-    font-size: 13px;
-    color: #666;
-    line-height: 1.7;
-    padding: 0 20px;
-  }
-
-  .faq-item.open .faq-answer {
-    max-height: 120px;
-    padding: 0 20px 16px;
-  }
-
-  .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-  .cta-panel {
-    background: var(--black);
-    padding: 50px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-panel::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 80% 50%, rgba(245,184,0,0.08), transparent 60%);
-  }
-
-  .cta-panel h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 38px;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: var(--white);
-    line-height: 1;
-    margin-bottom: 6px;
-    position: relative;
-  }
-
+  .cta-panel { background: var(--black); padding: 56px 48px; position: relative; overflow: hidden; border-radius: 6px; box-shadow: var(--premium-shadow); }
+  .cta-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 50%, rgba(245,184,0,0.08), transparent 65%); pointer-events: none; }
+  .cta-panel h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 42px; font-weight: 900; text-transform: uppercase; color: var(--white); line-height: 1.05; margin-bottom: 12px; position: relative; }
   .cta-panel h2 .highlight { color: var(--gold); }
-
-  .cta-panel p {
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.7;
-    margin-bottom: 28px;
-    position: relative;
-  }
-
-  .cta-badges {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 24px;
-    position: relative;
-  }
-
-  .cta-badge {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--text);
-  }
-
-  .cta-badge-icon {
-    width: 32px;
-    height: 32px;
-    background: rgba(245,184,0,0.1);
-    border: 1px solid rgba(245,184,0,0.3);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
+  .cta-panel p { color: var(--text); font-size: 15px; line-height: 1.7; margin-bottom: 32px; position: relative; }
+  .cta-badges { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; position: relative; }
+  .cta-badge { display: flex; align-items: center; gap: 12px; font-size: 14px; color: #e0e0e0; font-weight: 500; }
+  .cta-badge-icon { width: 34px; height: 34px; background: rgba(245,184,0,0.12); border: 1px solid rgba(245,184,0,0.3); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
 
   /* FOOTER */
-  footer {
-    background: #050505;
-    padding: 50px 60px 30px;
-    border-top: 1px solid #1a1a1a;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 240px 160px 200px 200px 180px;
-    gap: 40px;
-    margin-bottom: 40px;
-  }
-
-  .footer-logo p {
-    font-size: 13px;
-    color: var(--gray);
-    margin-top: 12px;
-    line-height: 1.6;
-  }
-
-  .footer-col h5 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-  }
-
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-
-  .footer-col ul li a {
-    color: var(--gray);
-    font-size: 13px;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
+  footer { background: #050505; padding: 70px 40px 40px; border-top: 1px solid #141414; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 260px 160px 220px 220px 180px; gap: 48px; margin-bottom: 52px; }
+  .footer-logo p { font-size: 14px; color: var(--gray); margin-top: 16px; line-height: 1.6; }
+  .footer-col h5 { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col ul li a { color: var(--gray); font-size: 14px; text-decoration: none; transition: color 0.2s ease; font-weight: 500; }
   .footer-col ul li a:hover { color: var(--white); }
-
-  .footer-col p {
-    color: var(--gray);
-    font-size: 13px;
-    line-height: 1.8;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .footer-social {
-    display: flex;
-    gap: 10px;
-    margin-top: 8px;
-  }
-
-  .social-btn {
-    width: 34px;
-    height: 34px;
-    background: var(--dark2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-decoration: none;
-    color: var(--gray);
-  }
-
-  .social-btn:hover { background: var(--gold); color: var(--black); }
-
-  .footer-bottom {
-    border-top: 1px solid #1a1a1a;
-    padding-top: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-bottom p {
-    font-size: 12px;
-    color: #444;
-  }
-
-  .hours-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .hour-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--gray);
-    gap: 12px;
-  }
-
+  .footer-col p { color: var(--gray); font-size: 14px; line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; font-weight: 500; }
+  .footer-social { display: flex; gap: 12px; margin-top: 12px; }
+  .social-btn { width: 36px; height: 36px; background: var(--dark3); display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; transition: all 0.2s ease; border-radius: 2px; text-decoration: none; color: var(--gray); }
+  .social-btn:hover { background: var(--gold); color: var(--black); transform: translateY(-2px); }
+  .footer-bottom { border-top: 1px solid #141414; padding-top: 32px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 13px; color: #444; font-weight: 500; }
+  .hours-list { display: flex; flex-direction: column; gap: 8px; }
+  .hour-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--gray); gap: 12px; font-weight: 500; }
   .hour-row span:last-child { color: var(--white); }
 
   /* Animations */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .hero-content > * {
-    animation: fadeUp 0.6s ease forwards;
-    opacity: 0;
-  }
+  .hero-content > * { animation: fadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+  .hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+  .hero-content > *:nth-child(2) { animation-delay: 0.12s; }
+  .hero-content > *:nth-child(3) { animation-delay: 0.18s; }
+  .hero-content > *:nth-child(4) { animation-delay: 0.24s; }
 
-  .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
-  .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
-  .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
-  .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
-
-  /* ============ MOBILE NAV TOGGLE ============ */
+  /* MOBILE HAMBURGER BUTTON */
   .nav-toggle {
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
-    width: 40px;
-    height: 40px;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -1071,237 +610,156 @@
 
   .nav-toggle span {
     display: block;
-    width: 22px;
+    width: 24px;
     height: 2px;
     background: var(--white);
-    transition: transform 0.25s ease, opacity 0.25s ease;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
   }
 
-  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
+  /* FULL SCREEN PREMIUM MOBILE MENU OVERLAY */
   .mobile-menu {
     display: none;
     position: fixed;
-    top: 64px;
+    top: 72px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--black);
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(8px);
     z-index: 99;
-    padding: 24px 24px 32px;
+    padding: 32px 24px;
     overflow-y: auto;
-    transform: translateY(-8px);
+    transform: translateY(-12px);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .mobile-menu.open {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .mobile-nav-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mobile-nav-links li { border-bottom: 1px solid #222; }
-
-  .mobile-nav-links a {
-    display: block;
-    padding: 16px 4px;
-    color: var(--white);
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .mobile-nav-phone {
-    color: var(--gold);
-    font-weight: 600;
-    font-size: 15px;
-    margin-top: 20px;
-  }
-
-  .mobile-btn-trial {
-    display: flex;
-    justify-content: center;
-    margin-top: 16px;
-    width: 100%;
-    padding: 14px 20px;
-  }
+  .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .mobile-nav-links { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .mobile-nav-links li { border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .mobile-nav-links a { display: block; padding: 18px 4px; color: var(--white); text-decoration: none; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .mobile-nav-phone { color: var(--gold); font-weight: 700; font-size: 16px; margin-top: 32px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; }
+  .mobile-btn-trial { display: flex; justify-content: center; margin-top: 20px; width: 100%; padding: 16px 24px; font-size: 15px; font-weight: 800; }
 
   /* ============================================================
-     RESPONSIVE BREAKPOINTS
+     RESPONSIVE BREAKPOINTS (PREMIUM MOBILE OPTIMIZATION)
      ============================================================ */
 
-  /* TABLET */
+  /* TABLET LAPTOP EDGE */
+  @media (max-width: 1160px) {
+    .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 36px; }
+    .footer-logo { grid-column: span 3; }
+  }
+
   @media (max-width: 1024px) {
     nav { padding: 0 24px; }
-    .nav-links { gap: 18px; }
-    .nav-links a { font-size: 12px; }
-
-    .hero-content { padding: 50px 40px; }
-    .hero h1 { font-size: 48px; }
-
-    .stats-bar { padding: 24px 30px; }
-
-    .transformations, .why-choose, .facility, .membership, .reviews, .faq {
-      padding: 50px 40px;
-    }
-
-    .transform-grid { grid-template-columns: repeat(2, 1fr); }
-    .why-grid { grid-template-columns: repeat(3, 1fr); }
-
-    .facility { grid-template-columns: 240px 1fr; gap: 40px; }
+    .nav-links { gap: 20px; }
+    .hero-content { padding: 70px 24px; }
+    .hero h1 { font-size: 56px; }
+    .stats-bar { padding: 24px; margin-left: 20px; margin-right: 20px; }
+    .transformations, .why-choose, .facility, .membership, .reviews, .faq-cta-wrap { padding: 70px 24px; }
+    .transform-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .why-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .facility { grid-template-columns: 1fr; gap: 32px; }
     .facility-grid { grid-template-columns: repeat(2, 1fr); }
-
-    .membership { grid-template-columns: 1fr; gap: 30px; }
+    .membership { grid-template-columns: 1fr; gap: 36px; }
     .plans-grid { grid-template-columns: repeat(3, 1fr); }
-
-    .reviews { grid-template-columns: 1fr; gap: 24px; }
+    .reviews { grid-template-columns: 1fr; gap: 32px; }
     .reviews-grid { grid-template-columns: repeat(2, 1fr); }
-    .reviews-label { padding-top: 0; }
-    .reviews-aggregate { justify-self: start; width: 200px; }
-
-    .faq { grid-template-columns: 1fr; }
-
-    .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
+    .reviews-aggregate { justify-self: center; width: 100%; max-width: 325px; }
+    .faq-cta-wrap { grid-template-columns: 1fr; gap: 48px; }
   }
 
-  /* MOBILE (large phones / small tablets) */
+  /* MOBILE VIEW (COMPLETELY OPTIMIZED & PREMIUM LOOKING) */
   @media (max-width: 767px) {
-    body { overflow-x: hidden; }
-
-    /* NAV */
-    nav { padding: 0 16px; height: 60px; }
-    .nav-links { display: none; }
-    .nav-phone { display: none; }
-    .btn-trial { display: none; }
+    nav { padding: 0 16px; height: 64px; }
+    .nav-links, .nav-phone, .btn-trial { display: none; }
     .nav-toggle { display: flex; }
-    .mobile-menu { display: block; top: 60px; }
-    .nav-right { gap: 0; }
+    .mobile-menu { display: block; top: 64px; }
 
-    /* HERO */
-    .hero {
-      grid-template-columns: 1fr;
-      min-height: auto;
+    /* Premium Full Bleed Dynamic Hero Layout for Mobile */
+    .hero { min-height: 520px; }
+    .hero-overlay {
+      /* Vertical gradient balance on small device screens */
+      background: linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.92) 60%, rgba(10,10,10,0.98) 100%);
     }
-    .hero-content {
-      padding: 40px 20px 32px;
-      gap: 18px;
-      order: 1;
-    }
-    .hero-badge { font-size: 10px; padding: 5px 12px; }
-    .hero h1 { font-size: 34px; letter-spacing: -0.5px; }
-    .hero p { font-size: 14px; max-width: 100%; }
-    .hero-btns { flex-direction: column; width: 100%; }
-    .btn-primary, .btn-outline {
-      width: 100%;
-      justify-content: center;
-      padding: 14px 20px;
-      font-size: 13px;
-    }
-    .hero-img { 
-      order: 2; 
-      height: 320px; /* Explicit visible height on mobile view */
-    }
-    .hero-img::after {
-      /* Adjusted gradient fade direction for mobile stacking */
-      background: linear-gradient(to top, var(--black) 0%, transparent 15%, transparent 85%, var(--black) 100%);
-    }
+    .hero-content { padding: 50px 16px; text-align: center; align-items: center; gap: 20px; }
+    .hero h1 { font-size: 40px; letter-spacing: -0.5px; max-width: 100%; }
+    .hero p { font-size: 15px; max-width: 100%; color: #d0d0d0; }
+    .hero-btns { flex-direction: column; width: 100%; gap: 12px; }
+    .btn-primary, .btn-outline { width: 100%; justify-content: center; padding: 15px 24px; font-size: 15px; }
 
-    /* STATS BAR */
+    /* Float / Stacking Stat Layer adjustments */
     .stats-bar {
       grid-template-columns: repeat(2, 1fr);
-      padding: 20px 16px;
-      gap: 16px 12px;
+      padding: 24px 12px;
+      gap: 20px 8px;
+      margin-left: 16px;
+      margin-right: 16px;
+      margin-top: -30px;
     }
-    .stat-item {
-      padding: 0 8px;
-      gap: 10px;
-      border-right: none;
-    }
+    .stat-item { padding: 0 12px; gap: 12px; border-right: none; }
     .stat-item:nth-child(odd) { border-right: 1px solid #eee; }
-    .stat-icon { font-size: 22px; }
-    .stat-info h3 { font-size: 20px; }
-    .stat-info p { font-size: 11px; }
+    .stat-icon { font-size: 26px; }
+    .stat-info h3 { font-size: 24px; }
+    .stat-info p { font-size: 11px; margin-top: 2px; }
 
-    /* SECTION HEADERS */
-    .section-title { font-size: 28px; }
-    .section-label { font-size: 10px; letter-spacing: 2px; }
+    /* Structural adjustments */
+    .section-title { font-size: 32px; }
+    .section-label { font-size: 11px; letter-spacing: 2px; }
+    
+    .transformations, .why-choose, .facility, .membership, .reviews, .faq-cta-wrap { padding: 56px 16px; }
 
-    /* TRANSFORMATIONS */
-    .transformations { padding: 44px 16px; }
-    .transform-grid {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-top: 28px;
-    }
-    .transform-images { height: 160px; }
-    .transform-info { padding: 26px 16px 16px; }
+    .transform-grid { grid-template-columns: 1fr; gap: 32px; margin-top: 36px; }
+    .transform-images { height: 190px; }
+    .transform-info { padding: 28px 16px 20px; }
+    .testimonial-card { padding: 32px 20px; }
 
-    /* WHY CHOOSE */
-    .why-choose { padding: 44px 16px; }
-    .why-grid { grid-template-columns: repeat(2, 1fr); margin-top: 32px; }
-    .why-item { padding: 24px 14px; }
+    .why-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 36px; }
+    .why-item { padding: 28px 14px; }
+    .why-icon { font-size: 30px; margin-bottom: 12px; }
 
-    /* FACILITY */
-    .facility {
-      grid-template-columns: 1fr;
-      padding: 44px 16px;
-      gap: 24px;
-    }
-    .facility-text h2 { font-size: 32px; }
-    .facility-grid { grid-template-columns: repeat(2, 1fr); }
-    .facility-item { height: 130px; }
+    .facility-text h2 { font-size: 38px; }
+    .facility-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .facility-item { height: 150px; }
+    .facility-label { font-size: 11px; padding: 12px 8px; }
 
-    /* MEMBERSHIP */
-    .membership { padding: 44px 16px; }
-    .membership-text h2 { font-size: 30px; }
-    .plans-grid { grid-template-columns: 1fr; gap: 16px; }
+    .membership-text h2 { font-size: 36px; }
+    .plans-grid { grid-template-columns: 1fr; gap: 24px; }
     .plan-card.popular { transform: none; }
-    .plan-card.popular:hover { transform: translateY(-4px); }
+    .plan-card:hover, .plan-card.popular:hover { transform: translateY(-4px); }
+    .plan-card { padding: 32px 24px; }
 
-    /* REVIEWS */
-    .reviews { padding: 44px 16px; }
-    .reviews-grid { grid-template-columns: 1fr; gap: 12px; }
-    .reviews-aggregate { width: 100%; justify-self: stretch; }
+    .reviews-grid { grid-template-columns: 1fr; gap: 14px; }
+    .review-card { padding: 20px; }
 
-    /* FAQ */
-    .faq { padding: 44px 16px; gap: 32px; }
-    .cta-panel { padding: 36px 24px; margin: 0 -16px; }
-    .cta-panel h2 { font-size: 28px; }
+    .cta-panel { padding: 40px 24px; }
+    .cta-panel h2 { font-size: 32px; }
+    .cta-badges { margin-top: 24px; }
 
-    /* FOOTER */
-    footer { padding: 40px 16px 24px; }
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
-    .footer-logo { grid-column: 1 / -1; }
-    .footer-bottom {
-      flex-direction: column;
-      gap: 8px;
-      text-align: center;
-    }
+    footer { padding: 50px 16px 30px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 36px; }
+    .footer-logo { grid-column: span 2; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; padding-top: 24px; }
   }
 
-  /* SMALL MOBILE */
-  @media (max-width: 420px) {
-    .hero h1 { font-size: 28px; }
-    .hero-img { height: 260px; }
-    .stats-bar { grid-template-columns: 1fr; }
+  /* SMALL DEVICE FIT TIGHTENING */
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 34px; }
+    .stats-bar { grid-template-columns: 1fr; gap: 16px; padding: 20px; }
     .stat-item:nth-child(odd) { border-right: none; }
-    .stat-item { border-bottom: 1px solid #eee; padding-bottom: 12px; }
+    .stat-item { border-bottom: 1px solid #f0f0f0; padding-bottom: 16px; justify-content: center; text-align: center; }
     .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .why-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; gap: 12px; }
     .facility-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr; }
+    .facility-item { height: 180px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .footer-logo { grid-column: span 1; }
   }
 </style>
 </head>
@@ -1332,6 +790,7 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
+
 <div class="mobile-menu" id="mobileMenu">
   <ul class="mobile-nav-links">
     <li><a href="#">Home</a></li>
@@ -1347,6 +806,9 @@
 </div>
 
 <section class="hero">
+  <img src="hero.png" alt="Apex Fitness Club Premium Facility" class="hero-bg-image">
+  <div class="hero-overlay"></div>
+  
   <div class="hero-content">
     <span class="hero-badge">🏆 Dhaka's #1 Trusted Gym Since 2018</span>
     <h1>Dhaka's <span class="highlight">Most Trusted</span> Fitness Community</h1>
@@ -1355,9 +817,6 @@
       <a class="btn-primary" href="#">BOOK FREE TRIAL →</a>
       <a class="btn-outline" href="#">▶ SEE MEMBER RESULTS</a>
     </div>
-  </div>
-  <div class="hero-img">
-    <img src="hero.png" alt="Apex Fitness Club Workout Space">
   </div>
 </section>
 
@@ -1373,7 +832,7 @@
     <span class="stat-icon">⭐</span>
     <div class="stat-info">
       <h3>4.9/5</h3>
-      <p>Google Rating (387 Reviews)</p>
+      <p>Google Reviews</p>
     </div>
   </div>
   <div class="stat-item">
@@ -1387,7 +846,7 @@
     <span class="stat-icon">📈</span>
     <div class="stat-info">
       <h3>23,000+</h3>
-      <p>Check-ins Last Month</p>
+      <p>Monthly Checks</p>
     </div>
   </div>
 </div>
@@ -1412,6 +871,7 @@
         <p>Lost 14kg in 5 months with proper training & nutrition guidance.</p>
       </div>
     </div>
+    
     <div class="transform-card">
       <div class="transform-images">
         <div class="transform-before">🏃</div>
@@ -1427,13 +887,14 @@
         <p>Lost 8kg in 4 months & gained confidence. Now she loves her lifestyle!</p>
       </div>
     </div>
+
     <div class="transform-card">
       <div class="transform-images">
         <div class="transform-before">🏃</div>
         <div class="transform-after">💪</div>
-        <div class="transform-badge" style="background: var(--gold); border-color: var(--black);">
-          <span class="badge-num" style="color: var(--black);">+6</span>
-          <span class="badge-unit" style="color: var(--black);">MUSCLE</span>
+        <div class="transform-badge">
+          <span class="badge-num">+6</span>
+          <span class="badge-unit">MUSCLE</span>
         </div>
       </div>
       <div class="transform-info">
@@ -1442,10 +903,11 @@
         <p>Gained 6kg muscle in 6 months. Stronger, fitter & more energetic than ever.</p>
       </div>
     </div>
+
     <div class="testimonial-card">
       <div>
         <div class="quote-mark">"</div>
-        <p>আগে নিজের প্রতি কোনো confidence ছিল না, এখন নিজেকে গর্ব করি।</p>
+        <p>আগে নিজের প্রতি কোনো confidence ছিল না, এখন নিজেকে নিয়ে গর্ব করি।</p>
         <div class="testimonial-author">– Farhan, Member</div>
       </div>
       <a class="btn-link" href="#">MORE SUCCESS STORIES →</a>
@@ -1453,43 +915,45 @@
   </div>
 </section>
 
-<section class="why-choose">
-  <p class="section-label" style="color: var(--gray);">WHY CHOOSE</p>
-  <h2 class="section-title" style="color: var(--white);">Why Choose <span class="highlight">Apex Fitness Club?</span></h2>
+<div class="why-choose-outer">
+  <section class="why-choose">
+    <p class="section-label">WHY CHOOSE US</p>
+    <h2 class="section-title">Why Choose <span class="highlight">Apex Fitness Club?</span></h2>
 
-  <div class="why-grid">
-    <div class="why-item">
-      <span class="why-icon">🎯</span>
-      <h4>Results Focused</h4>
-      <p>তোমার goal অনুযায়ী personalized plan এবং result নিশ্চিত করার commitment।</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-icon">🎯</span>
+        <h4>Results Focused</h4>
+        <p>তোমার goal অনুযায়ী personalized plan এবং result নিশ্চিত করার commitment।</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">👨‍🏫</span>
+        <h4>Expert Trainers</h4>
+        <p>Certified & experienced trainers যারা তোমাকে ঠিকভাবে guide করে।</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">🏋️</span>
+        <h4>Premium Gear</h4>
+        <p>World-class equipment যাতে তোমার workout হবে safe & effective।</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">✨</span>
+        <h4>Clean & Safe</h4>
+        <p>পরিষ্কার-পরিচ্ছন্ন environment। নিয়মিত sanitization & hygiene maintained.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">🕐</span>
+        <h4>Flexible Hours</h4>
+        <p>সকাল ৫টা থেকে রাত ১১টা পর্যন্ত। তোমার schedule অনুযায়ী workout করো।</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">🤝</span>
+        <h4>Community</h4>
+        <p>Motivating community যেখানে একসাথে সবাই grow করে।</p>
+      </div>
     </div>
-    <div class="why-item">
-      <span class="why-icon">👨‍🏫</span>
-      <h4>Expert Trainers</h4>
-      <p>Certified & experienced trainers যারা তোমাকে ঠিকভাবে guide করে।</p>
-    </div>
-    <div class="why-item">
-      <span class="why-icon">🏋️</span>
-      <h4>Premium Equipment</h4>
-      <p>World-class equipment যাতে তোমার workout হবে safe & effective।</p>
-    </div>
-    <div class="why-item">
-      <span class="why-icon">✨</span>
-      <h4>Clean & Safe</h4>
-      <p>পরিষ্কার-পরিচ্ছন্ন environment। নিয়মিত sanitization & hygiene maintained.</p>
-    </div>
-    <div class="why-item">
-      <span class="why-icon">🕐</span>
-      <h4>Flexible Timing</h4>
-      <p>সকাল ৫টা থেকে রাত ১১টা পর্যন্ত। তোমার schedule অনুযায়ী workout করো।</p>
-    </div>
-    <div class="why-item">
-      <span class="why-icon">🤝</span>
-      <h4>Friendly Community</h4>
-      <p>Motivating community যেখানে একসাথে সবাই grow করে।</p>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <section class="facility">
   <div class="facility-text">
@@ -1505,7 +969,7 @@
     </div>
     <div class="facility-item">
       <div class="facility-bg">🏃</div>
-      <div class="facility-label">Spacious Workout Floor</div>
+      <div class="facility-label">Spacious Floor</div>
     </div>
     <div class="facility-item">
       <div class="facility-bg">❤️</div>
@@ -1518,93 +982,99 @@
   </div>
 </section>
 
-<section class="membership">
-  <div class="membership-text">
-    <h3>Membership Plans</h3>
-    <h2>Choose Your Plan, Achieve <span class="highlight">Your Goal</span></h2>
-    <p>Flexible plans for every goal and every lifestyle.</p>
-    <a class="btn-primary" href="#">VIEW PLAN DETAILS →</a>
-  </div>
-  <div class="plans-grid">
-    <div class="plan-card">
-      <div class="plan-icon-wrap">⭐</div>
-      <div class="plan-name">Basic</div>
-      <div class="plan-desc">Start your fitness journey</div>
-      <ul class="plan-features">
-        <li>Gym Access</li>
-        <li>Basic Equipment</li>
-        <li>Locker Facility</li>
-        <li>Trainer Assistance</li>
-        <li>Flexible Timing</li>
-      </ul>
+<div class="membership-outer">
+  <section class="membership">
+    <div class="membership-text">
+      <h3>Membership Plans</h3>
+      <h2>Choose Your Plan, Achieve <span class="highlight">Your Goal</span></h2>
+      <p>Flexible plans for every goal and every lifestyle.</p>
+      <a class="btn-primary" href="#">VIEW PLAN DETAILS →</a>
     </div>
-    <div class="plan-card popular">
-      <div class="popular-badge">MOST POPULAR</div>
-      <div class="plan-icon-wrap">👑</div>
-      <div class="plan-name">Standard</div>
-      <div class="plan-desc">For serious results</div>
-      <ul class="plan-features">
-        <li>Everything in Basic</li>
-        <li>Personalized Workout Plan</li>
-        <li>Monthly Progress Tracking</li>
-        <li>Basic Nutrition Guidance</li>
-        <li>Priority Equipment Access</li>
-      </ul>
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-icon-wrap">⭐</div>
+        <div class="plan-name">Basic</div>
+        <div class="plan-desc">Start your fitness journey</div>
+        <ul class="plan-features">
+          <li>Gym Access</li>
+          <li>Basic Equipment</li>
+          <li>Locker Facility</li>
+          <li>Trainer Assistance</li>
+          <li>Flexible Timing</li>
+        </ul>
+      </div>
+      
+      <div class="plan-card popular">
+        <div class="popular-badge">MOST POPULAR</div>
+        <div class="plan-icon-wrap">👑</div>
+        <div class="plan-name">Standard</div>
+        <div class="plan-desc">For serious results</div>
+        <ul class="plan-features">
+          <li>Everything in Basic</li>
+          <li>Personalized Workout Plan</li>
+          <li>Monthly Progress Tracking</li>
+          <li>Basic Nutrition Guide</li>
+          <li>Priority Access</li>
+        </ul>
+      </div>
+      
+      <div class="plan-card">
+        <div class="plan-icon-wrap">💎</div>
+        <div class="plan-name">Premium</div>
+        <div class="plan-desc">Fastest transformation</div>
+        <ul class="plan-features">
+          <li>Everything in Standard</li>
+          <li>Personal Trainer</li>
+          <li>Custom Nutrition Plan</li>
+          <li>Body Composition Analysis</li>
+          <li>Unlimited Support</li>
+        </ul>
+      </div>
     </div>
-    <div class="plan-card">
-      <div class="plan-icon-wrap">💎</div>
-      <div class="plan-name">Premium</div>
-      <div class="plan-desc">Fastest transformation</div>
-      <ul class="plan-features">
-        <li>Everything in Standard</li>
-        <li>Personal Trainer</li>
-        <li>Custom Nutrition Plan</li>
-        <li>Body Composition Analysis</li>
-        <li>Unlimited Trainer Support</li>
-      </ul>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<section class="reviews">
-  <div class="reviews-label">Google Reviews</div>
-  <div class="reviews-grid">
-    <div class="review-card">
-      <span class="google-g">G</span>
-      <div class="stars">★★★★★</div>
-      <p>Best gym in Dhanmondi area! Environment, trainers, everything is just perfect.</p>
-      <div class="reviewer">– Sifat Ahmed</div>
+<div class="reviews-outer">
+  <section class="reviews">
+    <div class="reviews-label">Google Reviews</div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <span class="google-g">G</span>
+        <div class="stars">★★★★★</div>
+        <p>Best gym in Dhanmondi area! Environment, trainers, everything is just perfect.</p>
+        <div class="reviewer">– Sifat Ahmed</div>
+      </div>
+      <div class="review-card">
+        <span class="google-g">G</span>
+        <div class="stars">★★★★★</div>
+        <p>Clean, spacious and well maintained. Trainers are very supportive.</p>
+        <div class="reviewer">– Jannatul Ferdaus</div>
+      </div>
+      <div class="review-card">
+        <span class="google-g">G</span>
+        <div class="stars">★★★★★</div>
+        <p>I lost 10kg in 4 months. Highly recommend Apex Fitness Club!</p>
+        <div class="reviewer">– Rashidul Hasan</div>
+      </div>
+      <div class="review-card">
+        <span class="google-g">G</span>
+        <div class="stars">★★★★★</div>
+        <p>Great place for both beginners and advanced. Love the community!</p>
+        <div class="reviewer">– Tania Sultana</div>
+      </div>
     </div>
-    <div class="review-card">
-      <span class="google-g">G</span>
-      <div class="stars">★★★★★</div>
-      <p>Clean, spacious and well maintained. Trainers are very supportive.</p>
-      <div class="reviewer">– Jannatul Ferdaus</div>
+    <div class="reviews-aggregate">
+      <div class="agg-score">4.9</div>
+      <div class="agg-stars">★★★★★</div>
+      <div class="agg-reviews">Based on 387 reviews</div>
+      <a class="btn-link" href="#" style="margin-top: 16px; border-color: var(--black); color: var(--black);">READ ALL REVIEWS</a>
     </div>
-    <div class="review-card">
-      <span class="google-g">G</span>
-      <div class="stars">★★★★★</div>
-      <p>I lost 10kg in 4 months. Highly recommend Apex Fitness Club!</p>
-      <div class="reviewer">– Rashidul Hasan</div>
-    </div>
-    <div class="review-card">
-      <span class="google-g">G</span>
-      <div class="stars">★★★★★</div>
-      <p>Great place for both beginners and advanced. Love the community!</p>
-      <div class="reviewer">– Tania Sultana</div>
-    </div>
-  </div>
-  <div class="reviews-aggregate">
-    <div class="agg-score">4.9</div>
-    <div class="agg-stars">★★★★★</div>
-    <div class="agg-reviews">Based on 387 reviews</div>
-    <a class="btn-link" href="#" style="margin-top: 16px; border-color: var(--black); color: var(--black);">READ ALL REVIEWS</a>
-  </div>
-</section>
+  </section>
+</div>
 
-<section class="faq">
+<div class="faq-cta-wrap">
   <div>
-    <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:900; text-transform:uppercase; margin-bottom:28px;">FAQs</h2>
+    <h2 style="font-family:'Barlow Condensed',sans-serif; font-size:38px; font-weight:900; text-transform:uppercase;">FAQs</h2>
     <div class="faq-list">
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-question">
@@ -1627,18 +1097,11 @@
         </div>
         <div class="faq-answer">প্রথমে একটি free trial book করুন, তারপর আপনার লক্ষ্য ও সুবিধা অনুযায়ী plan বেছে নিন।</div>
       </div>
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">
-          Payment কীভাবে করা যায়?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">Cash, bKash, Nagad, এবং card payment সব ধরনের পেমেন্ট গ্রহণ করা হয়।</div>
-      </div>
     </div>
-    <a class="btn-link" href="#" style="margin-top: 20px; display: inline-flex;">আরো প্রশ্ন দেখুন →</a>
   </div>
+  
   <div class="cta-panel">
-    <h2>Your Future Self Is <span class="highlight">Waiting For You</span></h2>
+    <h2>Your Future Self Is <span class="highlight">Waiting</span></h2>
     <p>আজকে decision নাও। কাল result তোমার হবে। দেরি নয়, আজই শুরু করো তোমার transformation journey.</p>
     <a class="btn-primary" href="#">BOOK FREE TRIAL NOW →</a>
     <div class="cta-badges">
@@ -1650,66 +1113,59 @@
         <div class="cta-badge-icon">🤝</div>
         No Pressure — Just Guidance
       </div>
-      <div class="cta-badge">
-        <div class="cta-badge-icon">🔒</div>
-        100% Safe & Friendly Environment
-      </div>
     </div>
   </div>
-</section>
+</div>
 
 <footer>
-  <div class="footer-grid">
-    <div class="footer-logo">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:32px;height:32px;background:var(--gold);clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#000;font-family:'Barlow Condensed',sans-serif;">A</div>
-        <div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:#fff;letter-spacing:2px;">APEX</div>
-          <div style="font-size:8px;color:var(--gray);letter-spacing:3px;">FITNESS CLUB</div>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-logo">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:34px;height:34px;background:var(--gold);clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#000;font-family:'Barlow Condensed',sans-serif;">A</div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;color:#fff;letter-spacing:1px;">APEX</div>
+            <div style="font-size:9px;color:var(--gray);letter-spacing:2px;">FITNESS CLUB</div>
+          </div>
+        </div>
+        <p>Dhaka's trusted fitness community since 2018.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="#">f</a>
+          <a class="social-btn" href="#">📸</a>
+          <a class="social-btn" href="#">▶</a>
         </div>
       </div>
-      <p>Dhaka's trusted fitness community since 2018.</p>
-      <div class="footer-social" style="margin-top:16px;">
-        <a class="social-btn" href="#">f</a>
-        <a class="social-btn" href="#">📸</a>
-        <a class="social-btn" href="#">▶</a>
-        <a class="social-btn" href="#">♪</a>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Programs</a></li>
+          <li><a href="#">Membership</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Address</h5>
+        <p>📍 House 45, Road 12/A<br>Dhanmondi, Dhaka</p>
+      </div>
+      <div class="footer-col">
+        <h5>Hours</h5>
+        <div class="hours-list">
+          <div class="hour-row"><span>Sat – Thu</span><span>6 AM – 11 PM</span></div>
+          <div class="hour-row"><span>Friday</span><span>10 AM – 11 PM</span></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Community</h5>
+        <ul>
+          <li><a href="#">Facebook Group</a></li>
+          <li><a href="#">Instagram Feed</a></li>
+        </ul>
       </div>
     </div>
-    <div class="footer-col">
-      <h5>Quick Links</h5>
-      <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Programs</a></li>
-        <li><a href="#">Membership</a></li>
-        <li><a href="#">Success Stories</a></li>
-      </ul>
+    <div class="footer-bottom">
+      <p>© 2026 Apex Fitness Club. All rights reserved.</p>
+      <p>Premium Fitness Experience.</p>
     </div>
-    <div class="footer-col">
-      <h5>Address</h5>
-      <p>📍 House 45, Road 12/A<br>Dhanmondi, Dhaka-1209</p>
-      <p style="margin-top:8px;">📞 01711-222-333</p>
-    </div>
-    <div class="footer-col">
-      <h5>Opening Hours</h5>
-      <div class="hours-list">
-        <div class="hour-row"><span>Sat – Thu</span><span>6 AM – 11 PM</span></div>
-        <div class="hour-row"><span>Friday</span><span>10 AM – 11 PM</span></div>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5>Follow Us</h5>
-      <ul>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">YouTube</a></li>
-        <li><a href="#">TikTok</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2024 Apex Fitness Club. All rights reserved.</p>
-    <p>Designed for Dhaka's fitness community.</p>
   </div>
 </footer>
 
