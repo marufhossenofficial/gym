@@ -23,6 +23,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  [id] { scroll-margin-top: 88px; }
 
   body {
     font-family: 'Barlow', sans-serif;
@@ -162,15 +163,16 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    object-position: center 25%;
     z-index: 1;
+    filter: brightness(1.1) saturate(1.05);
   }
 
   /* Dark cinematic overlay mask to make text pop perfectly */
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(10,10,10,.82) 0%, rgba(10,10,10,.55) 45%, rgba(10,10,10,.18) 100%);
+    background: linear-gradient(90deg, rgba(10,10,10,.70) 0%, rgba(10,10,10,.45) 45%, rgba(10,10,10,.12) 100%);
     z-index: 2;
     pointer-events: none;
   }
@@ -563,6 +565,25 @@
   .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .plan-features li { font-size: 14px; color: #333; display: flex; align-items: center; gap: 10px; font-weight: 500; }
   .plan-features li::before { content: '✓'; color: var(--green); font-weight: 900; font-size: 16px; flex-shrink: 0; }
+  .plan-select-btn {
+    width: 100%;
+    margin-top: 28px;
+    padding: 13px 20px;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.25s ease;
+  }
+  .plan-select-btn:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+  .plan-select-btn-popular { background: var(--gold); color: var(--black); }
+  .plan-select-btn-popular:hover { background: var(--gold-dark); }
 
   /* REVIEWS */
   .reviews-outer { background: var(--black); width: 100%; }
@@ -730,10 +751,10 @@
 
     /* Premium Full Bleed Dynamic Hero Layout for Mobile */
     .hero { min-height: 560px; }
-    .hero-bg-image { object-position: center 18%; }
+    .hero-bg-image { object-position: center 15%; }
     .hero-overlay {
       /* Vertical gradient balance on small device screens */
-      background: linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.92) 60%, rgba(10,10,10,0.98) 100%);
+      background: linear-gradient(180deg, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.80) 60%, rgba(10,10,10,0.88) 100%);
     }
     .hero-content { padding: 50px 16px; text-align: center; align-items: center; gap: 20px; }
     .hero h1 { font-size: 40px; letter-spacing: -0.5px; max-width: 100%; }
@@ -885,11 +906,174 @@
   .mobile-sticky-bar svg{width:16px;height:16px}
   body{padding-bottom:64px}
 }
-.whatsapp-float{position:fixed;right:24px;bottom:24px;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;z-index:9999;box-shadow:0 12px 30px rgba(37,211,102,.4), 0 4px 12px rgba(0,0,0,.25);animation:pulse 2.4s infinite;transition:transform .25s cubic-bezier(0.4,0,0.2,1), box-shadow .25s ease}
-.whatsapp-float svg{width:30px;height:30px}
+/* ============================================================
+   BOOKING MODAL
+   ============================================================ */
+.booking-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,5,5,0.72);
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.booking-overlay.open { display: flex; }
+
+.booking-modal {
+  background: #fff;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+  padding: 36px 32px 32px;
+  animation: modalPop 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes modalPop { from { opacity: 0; transform: translateY(18px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.booking-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--light-gray);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 5;
+}
+.booking-close:hover { background: #eee; transform: rotate(90deg); }
+.booking-close svg { width: 16px; height: 16px; }
+
+.booking-progress { margin-bottom: 28px; padding-right: 30px; }
+.booking-progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.booking-progress-top span:first-child { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.5px; color: var(--black); text-transform: uppercase; }
+.booking-progress-note { font-size: 12px; color: var(--green); font-weight: 600; display: flex; align-items: center; gap: 5px; }
+.booking-progress-bar { height: 5px; background: #eee; border-radius: 10px; overflow: hidden; }
+.booking-progress-fill { height: 100%; width: 33.33%; background: linear-gradient(90deg, var(--gold-dark), var(--gold)); border-radius: 10px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
+
+.booking-title { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; line-height: 1.2; margin-bottom: 22px; color: var(--black); }
+
+.goal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.goal-option {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 22px 12px; border: 1.5px solid #e5e5e5; border-radius: 8px;
+  background: #fff; cursor: pointer; font-size: 13.5px; font-weight: 700;
+  color: var(--black); transition: all 0.2s ease; font-family: 'Barlow', sans-serif;
+}
+.goal-option .goal-emoji { font-size: 26px; }
+.goal-option:hover { border-color: var(--gold); background: rgba(245,184,0,0.05); transform: translateY(-2px); }
+.goal-option.selected { border-color: var(--gold); background: rgba(245,184,0,0.1); box-shadow: 0 6px 18px rgba(245,184,0,0.2); }
+
+.booking-branch {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--light-gray); border: 1px solid #eee; border-radius: 8px;
+  padding: 14px 16px; font-size: 13.5px; font-weight: 600; color: #444;
+}
+
+.booking-field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; font-size: 13.5px; font-weight: 700; color: var(--black); }
+.booking-field em { color: #e5484d; font-style: normal; }
+.booking-field small { color: var(--gray); font-weight: 500; }
+.booking-field input, .booking-field textarea {
+  font-family: 'Barlow', sans-serif; font-size: 15px; font-weight: 500;
+  padding: 13px 14px; border: 1.5px solid #e5e5e5; border-radius: 7px;
+  outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; color: var(--black);
+  resize: vertical;
+}
+.booking-field input:focus, .booking-field textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,184,0,0.15); }
+.booking-field input.invalid { border-color: #e5484d; }
+.field-error { font-size: 12px; color: #e5484d; font-weight: 600; min-height: 14px; }
+
+.booking-note { font-size: 12.5px; color: #666; line-height: 1.6; background: var(--light-gray); border-radius: 7px; padding: 12px 14px; margin-bottom: 22px; }
+
+.time-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.time-option {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+  border: 1.5px solid #e5e5e5; border-radius: 8px; background: #fff; cursor: pointer;
+  text-align: left; transition: all 0.2s ease; font-family: 'Barlow', sans-serif;
+}
+.time-option .time-emoji { font-size: 22px; }
+.time-option > span:nth-child(2) { display: flex; flex-direction: column; }
+.time-option > span:nth-child(2) > span:first-child { font-weight: 700; font-size: 14.5px; color: var(--black); }
+.time-option small { color: var(--gray); font-size: 12.5px; margin-top: 1px; }
+.time-option:hover { border-color: var(--gold); background: rgba(245,184,0,0.05); }
+.time-option.selected { border-color: var(--gold); background: rgba(245,184,0,0.1); box-shadow: 0 6px 18px rgba(245,184,0,0.18); }
+
+.booking-back {
+  background: none; border: none; color: var(--gray); font-size: 13px; font-weight: 700;
+  cursor: pointer; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 5px;
+  padding: 0; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.booking-back:hover { color: var(--black); }
+
+.booking-next-btn { width: 100%; justify-content: center; margin-top: 4px; border: none; }
+.booking-next-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.booking-next-btn:disabled:hover { background: var(--gold); transform: none; box-shadow: none; }
+
+.booking-success { text-align: center; }
+.success-icon { font-size: 52px; margin-bottom: 6px; }
+.booking-success .booking-title { font-size: 24px; }
+.success-thanks { font-size: 16px; font-weight: 700; color: var(--black); margin-bottom: 6px; }
+.success-sub { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 22px; }
+.success-details {
+  background: var(--light-gray); border-radius: 8px; padding: 16px 20px; margin-bottom: 24px;
+  display: flex; flex-direction: column; gap: 12px; text-align: left;
+}
+.success-details > div { display: flex; justify-content: space-between; font-size: 13.5px; }
+.success-details strong { color: var(--black); font-weight: 700; }
+.success-details span:last-child { color: #444; font-weight: 600; }
+.success-btns { display: flex; flex-direction: column; gap: 10px; }
+.success-btns a { justify-content: center; }
+.btn-outline-dark {
+  display: flex; align-items: center; gap: 8px; padding: 15px 24px;
+  border: 1.5px solid #ddd; color: var(--black); font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800; font-size: 15px; letter-spacing: 1px; text-transform: uppercase;
+  text-decoration: none; border-radius: 6px; transition: all 0.2s ease;
+}
+.btn-outline-dark:hover { border-color: var(--black); background: var(--light-gray); }
+.success-btns .btn-primary { border-radius: 6px; }
+
+@media (max-width: 480px) {
+  .booking-modal { padding: 28px 20px 24px; border-radius: 10px; }
+  .booking-title { font-size: 22px; }
+  .goal-option { padding: 18px 8px; }
+}
+
+/* ============================================================
+   FACILITY LIGHTBOX
+   ============================================================ */
+.lightbox-overlay {
+  position: fixed; inset: 0; background: rgba(5,5,5,0.9); z-index: 2000;
+  display: none; align-items: center; justify-content: center; padding: 24px;
+}
+.lightbox-overlay.open { display: flex; }
+.lightbox-box { max-width: 900px; width: 100%; position: relative; }
+.lightbox-box img { width: 100%; max-height: 78vh; object-fit: contain; border-radius: 8px; display: block; }
+.lightbox-caption { color: #fff; text-align: center; margin-top: 14px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+.lightbox-close {
+  position: absolute; top: -46px; right: 0; width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s ease;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.22); }
+.lightbox-close svg { width: 16px; height: 16px; }
+
+.whatsapp-float{position:fixed;right:24px;bottom:44px;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;z-index:9999;box-shadow:0 12px 30px rgba(37,211,102,.4), 0 4px 12px rgba(0,0,0,.25);animation:pulse 2.4s infinite;transition:transform .25s cubic-bezier(0.4,0,0.2,1), box-shadow .25s ease}
+.whatsapp-float svg{width:28px;height:28px}
 .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 16px 36px rgba(37,211,102,.5), 0 6px 16px rgba(0,0,0,.3)}
 @keyframes pulse{0%{box-shadow:0 12px 30px rgba(37,211,102,.4), 0 0 0 0 rgba(37,211,102,.4)}70%{box-shadow:0 12px 30px rgba(37,211,102,.4), 0 0 0 14px rgba(37,211,102,0)}100%{box-shadow:0 12px 30px rgba(37,211,102,.4), 0 0 0 0 rgba(37,211,102,0)}}
-@media (max-width:767px){.whatsapp-float{right:16px;bottom:88px}}
+@media (max-width:767px){.whatsapp-float{right:16px;bottom:108px}}
 
 </style>
 </head>
@@ -904,16 +1088,16 @@
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">About Us</a></li>
-    <li><a href="#">Programs</a></li>
-    <li><a href="#">Membership</a></li>
-    <li><a href="#">Success Stories</a></li>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#results">Success Stories</a></li>
     
   </ul>
   <div class="nav-right">
     <div class="nav-phone">📞 01711-222-333</div>
-    <a class="btn-trial" href="#">FREE TRIAL BOOK →</a>
+    <a class="btn-trial js-book-trigger" href="#">FREE TRIAL BOOK →</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -922,28 +1106,28 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <ul class="mobile-nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">About Us</a></li>
-    <li><a href="#">Programs</a></li>
-    <li><a href="#">Membership</a></li>
-    <li><a href="#">Success Stories</a></li>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#results">Success Stories</a></li>
     
   </ul>
   <div class="mobile-nav-phone">📞 01711-222-333</div>
-  <a class="btn-trial mobile-btn-trial" href="#">FREE TRIAL BOOK →</a>
+  <a class="btn-trial mobile-btn-trial js-book-trigger" href="#">FREE TRIAL BOOK →</a>
 </div>
 
-<section class="hero">
+<section class="hero" id="home">
   <img src="hero.png" alt="Apex Fitness Club Premium Facility" class="hero-bg-image">
   <div class="hero-overlay"></div>
   
   <div class="hero-content">
     <span class="hero-badge"><span class="stars-row">★★★★★</span><span>4.9 Rating</span><span class="badge-sep">•</span><span>387 Google Reviews</span></span>
     <h1>Dhaka's <span class="highlight">Most Trusted</span> Fitness Community</h1>
-    <p>Join 1,200+ members who are building stronger bodies, more confidence, and healthier lives.</p>
+    <p>Join 1,200+ members transforming their health with expert coaching, premium equipment, and a supportive fitness community.</p>
     <div class="hero-btns">
-      <a class="btn-primary" href="#">BOOK FREE TRIAL →</a>
-      <a class="btn-outline" href="#">▶ SEE MEMBER RESULTS</a>
+      <a class="btn-primary js-book-trigger" href="#">BOOK FREE TRIAL →</a>
+      <a class="btn-outline" href="#results">▶ SEE MEMBER RESULTS</a>
     </div>
   </div>
 </section>
@@ -952,14 +1136,14 @@
   <div class="stat-item">
     <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"></path><circle cx="9.5" cy="8" r="3.2"></circle><path d="M15.5 5.5a3 3 0 0 1 0 6"></path><path d="M19 20v-1.5a3 3 0 0 0-2-2.8"></path></svg></span>
     <div class="stat-info">
-      <h3>1,247+</h3>
+      <h3><span class="count-up" data-count="1247" data-suffix="+">0</span></h3>
       <p>Active Members</p>
     </div>
   </div>
   <div class="stat-item">
     <span class="stat-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.3 6.9.7-5.2 4.6 1.6 6.8L12 17.6l-6.2 3.3 1.6-6.8-5.2-4.6 6.9-.7z"/></svg></span>
     <div class="stat-info">
-      <h3>4.9/5</h3>
+      <h3><span class="count-up" data-count="4.9" data-decimals="1" data-suffix="/5">0</span></h3>
       <p>Google Reviews</p>
     </div>
   </div>
@@ -973,13 +1157,13 @@
   <div class="stat-item">
     <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span>
     <div class="stat-info">
-      <h3>23,000+</h3>
+      <h3><span class="count-up" data-count="23000" data-suffix="+">0</span></h3>
       <p>Monthly Checks</p>
     </div>
   </div>
 </div>
 
-<section class="transformations">
+<section class="transformations" id="results">
   <p class="section-label">REAL PEOPLE. REAL RESULTS.</p>
   <h2 class="section-title">Transformations That <span class="highlight">Inspire</span></h2>
 
@@ -1046,7 +1230,7 @@
   </div>
 </section>
 
-<div class="why-choose-outer">
+<div class="why-choose-outer" id="about">
   <section class="why-choose">
     <p class="section-label">WHY CHOOSE US</p>
     <h2 class="section-title">Why Choose <span class="highlight">Apex Fitness Club?</span></h2>
@@ -1055,17 +1239,17 @@
       <div class="why-item">
         <span class="why-icon"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1" fill="currentColor"></circle></svg></span>
         <h4>Results Focused</h4>
-        <p>তোমার goal অনুযায়ী personalized plan এবং result নিশ্চিত করার commitment।</p>
+        <p>আপনার goal অনুযায়ী personalized plan এবং result নিশ্চিত করার commitment।</p>
       </div>
       <div class="why-item">
         <span class="why-icon"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"></path><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"></path></svg></span>
         <h4>Expert Trainers</h4>
-        <p>Certified & experienced trainers যারা তোমাকে ঠিকভাবে guide করে।</p>
+        <p>Certified & experienced trainers যারা আপনাকে ঠিকভাবে guide করে।</p>
       </div>
       <div class="why-item">
         <span class="why-icon"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5 4 4"></path><path d="M17.5 17.5 20 20"></path><path d="M6.5 17.5 4 20"></path><path d="M17.5 6.5 20 4"></path><rect x="7" y="7" width="10" height="10" rx="2"></rect></svg></span>
         <h4>Premium Gear</h4>
-        <p>World-class equipment যাতে তোমার workout হবে safe & effective।</p>
+        <p>World-class equipment যাতে আপনার workout হবে safe & effective।</p>
       </div>
       <div class="why-item">
         <span class="why-icon"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6l-8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
@@ -1075,7 +1259,7 @@
       <div class="why-item">
         <span class="why-icon"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg></span>
         <h4>Flexible Hours</h4>
-        <p>সকাল ৫টা থেকে রাত ১১টা পর্যন্ত। তোমার schedule অনুযায়ী workout করো।</p>
+        <p>সকাল ৫টা থেকে রাত ১১টা পর্যন্ত। আপনার schedule অনুযায়ী workout করুন।</p>
       </div>
       <div class="why-item">
         <span class="why-icon"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"></path><circle cx="9.5" cy="8" r="3.2"></circle><path d="M15.5 5.5a3 3 0 0 1 0 6"></path><path d="M19 20v-1.5a3 3 0 0 0-2-2.8"></path></svg></span>
@@ -1086,12 +1270,12 @@
   </section>
 </div>
 
-<section class="facility">
+<section class="facility" id="programs">
   <div class="facility-text">
     <h3>Train in a Place</h3>
     <h2>YOU'LL <span class="highlight">LOVE</span></h2>
     <p>Spacious, clean, fully air-conditioned gym with modern equipment and everything you need for the best workout experience.</p>
-    <a class="btn-primary" href="#">TAKE A VIRTUAL TOUR ▶</a>
+    <a class="btn-primary js-gallery-tour" href="#programs">TAKE A VIRTUAL TOUR ▶</a>
   </div>
   
 <div class="facility-grid">
@@ -1102,7 +1286,7 @@
 </div>
 </section>
 
-<div class="membership-outer">
+<div class="membership-outer" id="membership">
   <section class="membership">
     <div class="membership-text">
       <h3>Membership Plans</h3>
@@ -1122,6 +1306,7 @@
           <li>Trainer Assistance</li>
           <li>Flexible Timing</li>
         </ul>
+        <button type="button" class="plan-select-btn js-book-trigger" data-plan="Basic">Choose Basic</button>
       </div>
       
       <div class="plan-card popular">
@@ -1136,6 +1321,7 @@
           <li>Basic Nutrition Guide</li>
           <li>Priority Access</li>
         </ul>
+        <button type="button" class="plan-select-btn plan-select-btn-popular js-book-trigger" data-plan="Standard">Choose Standard</button>
       </div>
       
       <div class="plan-card">
@@ -1149,6 +1335,7 @@
           <li>Body Composition Analysis</li>
           <li>Unlimited Support</li>
         </ul>
+        <button type="button" class="plan-select-btn js-book-trigger" data-plan="Premium">Choose Premium</button>
       </div>
     </div>
   </section>
@@ -1222,8 +1409,8 @@
   
   <div class="cta-panel">
     <h2>Your Future Self Is <span class="highlight">Waiting</span></h2>
-    <p>আজকে decision নাও। কাল result তোমার হবে। দেরি নয়, আজই শুরু করো তোমার transformation journey.</p>
-    <a class="btn-primary" href="#">BOOK FREE TRIAL NOW →</a>
+    <p>আজকে decision নিন। কাল result আপনার হবে। দেরি নয়, আজই শুরু করুন আপনার transformation journey.</p>
+    <a class="btn-primary js-book-trigger" href="#">BOOK FREE TRIAL NOW →</a>
     <div class="cta-badges">
       <div class="cta-badge">
         <div class="cta-badge-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
@@ -1258,9 +1445,9 @@
       <div class="footer-col">
         <h5>Quick Links</h5>
         <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Programs</a></li>
-          <li><a href="#">Membership</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#membership">Membership</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1334,13 +1521,355 @@
   } else {
     revealTargets.forEach(el => el.classList.add('in-view'));
   }
+
+  /* ============================================================
+     STAT COUNT-UP ANIMATION
+     ============================================================ */
+  const countEls = document.querySelectorAll('.count-up');
+  function runCount(el) {
+    const target = parseFloat(el.getAttribute('data-count'));
+    const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 1400;
+    const start = performance.now();
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = target * eased;
+      el.textContent = (decimals > 0 ? value.toFixed(decimals) : Math.round(value).toLocaleString('en-US')) + suffix;
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  if ('IntersectionObserver' in window && countEls.length) {
+    const countIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          runCount(entry.target);
+          countIo.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    countEls.forEach(el => countIo.observe(el));
+  } else {
+    countEls.forEach(runCount);
+  }
+
+  /* ============================================================
+     SMOOTH SCROLL FOR IN-PAGE ANCHORS
+     ============================================================ */
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    const targetId = link.getAttribute('href').slice(1);
+    if (!targetId) return;
+    const targetEl = document.getElementById(targetId);
+    if (!targetEl) return;
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ============================================================
+     BOOKING MODAL
+     ============================================================ */
+  (function() {
+    const overlay = document.getElementById('bookingOverlay');
+    const closeBtn = document.getElementById('bookingClose');
+    const steps = overlay.querySelectorAll('.booking-step');
+    const progressFill = document.getElementById('bookingProgressFill');
+    const stepLabel = document.getElementById('bookingStepLabel');
+    const totalSteps = 3;
+
+    const state = { goal: null, name: '', phone: '', email: '', time: null, notes: '' };
+
+    function showStep(stepKey) {
+      steps.forEach(s => { s.hidden = s.getAttribute('data-step') !== String(stepKey); });
+      if (stepKey === 'success') {
+        stepLabel.parentElement.parentElement.style.display = 'none';
+      } else {
+        stepLabel.parentElement.parentElement.style.display = '';
+        stepLabel.textContent = `Step ${stepKey} of ${totalSteps}`;
+        progressFill.style.width = (parseInt(stepKey, 10) / totalSteps * 100) + '%';
+      }
+    }
+
+    function resetModal() {
+      state.goal = null; state.name = ''; state.phone = ''; state.email = ''; state.time = null; state.notes = '';
+      overlay.querySelectorAll('.goal-option').forEach(b => b.classList.remove('selected'));
+      overlay.querySelectorAll('.time-option').forEach(b => b.classList.remove('selected'));
+      document.getElementById('bookingName').value = '';
+      document.getElementById('bookingPhone').value = '';
+      document.getElementById('bookingEmail').value = '';
+      document.getElementById('bookingNotes').value = '';
+      document.getElementById('bookingNameError').textContent = '';
+      document.getElementById('bookingPhoneError').textContent = '';
+      document.getElementById('bookingEmailError').textContent = '';
+      document.getElementById('bookingName').classList.remove('invalid');
+      document.getElementById('bookingPhone').classList.remove('invalid');
+      document.getElementById('bookingEmail').classList.remove('invalid');
+      document.getElementById('bookingReserveBtn').disabled = true;
+      showStep(1);
+    }
+
+    function openModal() {
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      setTimeout(resetModal, 250);
+    }
+
+    document.querySelectorAll('.js-book-trigger').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+
+    // Step 1: goal selection -> auto-advance
+    overlay.querySelectorAll('.goal-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        overlay.querySelectorAll('.goal-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        state.goal = btn.getAttribute('data-goal');
+        setTimeout(() => showStep(2), 300);
+      });
+    });
+
+    // Back buttons
+    overlay.querySelectorAll('.booking-back').forEach(btn => {
+      btn.addEventListener('click', () => showStep(parseInt(btn.getAttribute('data-back'), 10)));
+    });
+
+    // Step 2: form validation
+    const nameInput = document.getElementById('bookingName');
+    const phoneInput = document.getElementById('bookingPhone');
+    const emailInput = document.getElementById('bookingEmail');
+    const form2 = document.getElementById('bookingFormStep2');
+
+    function validPhone(v) {
+      return /^(?:\+?880|0)1[3-9]\d{8}$/.test(v.replace(/[\s-]/g, ''));
+    }
+    function validEmail(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    form2.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let ok = true;
+      const nameErr = document.getElementById('bookingNameError');
+      const phoneErr = document.getElementById('bookingPhoneError');
+      const emailErr = document.getElementById('bookingEmailError');
+      nameErr.textContent = ''; phoneErr.textContent = ''; emailErr.textContent = '';
+      nameInput.classList.remove('invalid'); phoneInput.classList.remove('invalid'); emailInput.classList.remove('invalid');
+
+      if (!nameInput.value.trim()) {
+        nameErr.textContent = 'Please enter your full name.';
+        nameInput.classList.add('invalid'); ok = false;
+      }
+      if (!phoneInput.value.trim() || !validPhone(phoneInput.value.trim())) {
+        phoneErr.textContent = 'Enter a valid Bangladeshi mobile number.';
+        phoneInput.classList.add('invalid'); ok = false;
+      }
+      if (emailInput.value.trim() && !validEmail(emailInput.value.trim())) {
+        emailErr.textContent = 'Enter a valid email address.';
+        emailInput.classList.add('invalid'); ok = false;
+      }
+      if (!ok) return;
+
+      state.name = nameInput.value.trim();
+      state.phone = phoneInput.value.trim();
+      state.email = emailInput.value.trim();
+      showStep(3);
+    });
+
+    // Step 3: time selection
+    const reserveBtn = document.getElementById('bookingReserveBtn');
+    overlay.querySelectorAll('.time-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        overlay.querySelectorAll('.time-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        state.time = btn.getAttribute('data-time');
+        reserveBtn.disabled = false;
+      });
+    });
+
+    reserveBtn.addEventListener('click', () => {
+      if (!state.time) return;
+      state.notes = document.getElementById('bookingNotes').value.trim();
+      document.getElementById('successName').textContent = state.name || 'there';
+      document.getElementById('successTime').textContent = state.time;
+      showStep('success');
+    });
+  })();
+
+  /* ============================================================
+     FACILITY LIGHTBOX
+     ============================================================ */
+  (function() {
+    const overlay = document.getElementById('lightboxOverlay');
+    const img = document.getElementById('lightboxImg');
+    const caption = document.getElementById('lightboxCaption');
+    const closeBtn = document.getElementById('lightboxClose');
+
+    function openLightbox(src, alt, label) {
+      img.src = src;
+      img.alt = alt;
+      caption.textContent = label;
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    const facilityItems = document.querySelectorAll('.facility-item');
+    facilityItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const itemImg = item.querySelector('.facility-bg');
+        const label = item.querySelector('.facility-label');
+        openLightbox(itemImg.src, itemImg.alt, label ? label.textContent : itemImg.alt);
+      });
+    });
+
+    const tourBtn = document.querySelector('.js-gallery-tour');
+    if (tourBtn && facilityItems.length) {
+      tourBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('programs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    closeBtn.addEventListener('click', closeLightbox);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeLightbox(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeLightbox();
+    });
+  })();
 </script>
+
+
+<!-- BOOKING MODAL -->
+<div class="booking-overlay" id="bookingOverlay" aria-hidden="true">
+  <div class="booking-modal" role="dialog" aria-modal="true" aria-labelledby="bookingTitleLive">
+    <button type="button" class="booking-close" id="bookingClose" aria-label="Close booking form">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+    </button>
+
+    <div class="booking-progress">
+      <div class="booking-progress-top">
+        <span id="bookingStepLabel">Step 1 of 3</span>
+        <span class="booking-progress-note">✓ Takes less than 30 seconds</span>
+      </div>
+      <div class="booking-progress-bar"><div class="booking-progress-fill" id="bookingProgressFill"></div></div>
+    </div>
+
+    <!-- STEP 1: GOAL -->
+    <div class="booking-step" data-step="1">
+      <h3 class="booking-title" id="bookingTitleLive">What's your primary fitness goal?</h3>
+      <div class="goal-grid">
+        <button type="button" class="goal-option" data-goal="Weight Loss"><span class="goal-emoji">🔥</span>Weight Loss</button>
+        <button type="button" class="goal-option" data-goal="Muscle Gain"><span class="goal-emoji">💪</span>Muscle Gain</button>
+        <button type="button" class="goal-option" data-goal="General Fitness"><span class="goal-emoji">❤️</span>General Fitness</button>
+        <button type="button" class="goal-option" data-goal="Improve Strength"><span class="goal-emoji">🏃</span>Improve Strength</button>
+      </div>
+      <div class="booking-branch">📍 Apex Fitness Club — Dhanmondi</div>
+    </div>
+
+    <!-- STEP 2: DETAILS -->
+    <div class="booking-step" data-step="2" hidden>
+      <button type="button" class="booking-back" data-back="1">← Back</button>
+      <h3 class="booking-title">Tell us about yourself</h3>
+      <form id="bookingFormStep2" novalidate>
+        <label class="booking-field">
+          <span>Full Name <em>*</em></span>
+          <input type="text" id="bookingName" required autocomplete="name" placeholder="e.g. Rahim Uddin">
+          <span class="field-error" id="bookingNameError"></span>
+        </label>
+        <label class="booking-field">
+          <span>Mobile Number <em>*</em></span>
+          <input type="tel" id="bookingPhone" required inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX">
+          <span class="field-error" id="bookingPhoneError"></span>
+        </label>
+        <label class="booking-field">
+          <span>Email <small>(Optional)</small></span>
+          <input type="email" id="bookingEmail" autocomplete="email" placeholder="you@example.com">
+          <span class="field-error" id="bookingEmailError"></span>
+        </label>
+        <p class="booking-note">We'll call you shortly to confirm your free trial.<br>No payment required.</p>
+        <button type="submit" class="btn-primary booking-next-btn">Continue →</button>
+      </form>
+    </div>
+
+    <!-- STEP 3: TIME -->
+    <div class="booking-step" data-step="3" hidden>
+      <button type="button" class="booking-back" data-back="2">← Back</button>
+      <h3 class="booking-title">When do you usually prefer to work out?</h3>
+      <div class="time-grid">
+        <button type="button" class="time-option" data-time="Morning"><span class="time-emoji">🌅</span><span><span>Morning</span><small>6 AM – 11 AM</small></span></button>
+        <button type="button" class="time-option" data-time="Afternoon"><span class="time-emoji">☀️</span><span><span>Afternoon</span><small>11 AM – 4 PM</small></span></button>
+        <button type="button" class="time-option" data-time="Evening"><span class="time-emoji">🌙</span><span><span>Evening</span><small>4 PM – 11 PM</small></span></button>
+      </div>
+      <label class="booking-field">
+        <span>Anything you'd like our trainer to know? <small>(Optional)</small></span>
+        <textarea id="bookingNotes" rows="3" placeholder="e.g. I'm a beginner, I have knee pain, or I want to lose 10 kg."></textarea>
+      </label>
+      <button type="button" class="btn-primary booking-next-btn" id="bookingReserveBtn" disabled>Reserve My Free Trial →</button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="booking-step booking-success" data-step="success" hidden>
+      <div class="success-icon">🎉</div>
+      <h3 class="booking-title">Your Free Trial Has Been Reserved!</h3>
+      <p class="success-thanks">Thank you, <strong id="successName">there</strong>!</p>
+      <p class="success-sub">A fitness advisor will call you within 15 minutes to confirm your visit.</p>
+      <div class="success-details">
+        <div><strong>Location</strong><span>Apex Fitness Club, Dhanmondi</span></div>
+        <div><strong>Preferred Time</strong><span id="successTime">—</span></div>
+      </div>
+      <div class="success-btns">
+        <a class="btn-outline-dark" href="tel:+8801711222333">📞 Call Gym</a>
+        <a class="btn-primary" href="https://wa.me/8801711222333" target="_blank" rel="noopener">💬 WhatsApp Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FACILITY LIGHTBOX -->
+<div class="lightbox-overlay" id="lightboxOverlay" aria-hidden="true">
+  <div class="lightbox-box">
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close gallery preview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+    </button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
 
 <div class="mobile-sticky-bar">
   <a class="sticky-call" href="tel:+8801711222333"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call Now</a>
-  <a class="sticky-book" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Book Free Trial</a>
+  <a class="sticky-book js-book-trigger" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Book Free Trial</a>
 </div>
 
 <a class="whatsapp-float" href="https://wa.me/8801711222333" target="_blank" aria-label="Chat on WhatsApp"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16.004 3C9.376 3 4 8.373 4 15c0 2.348.674 4.54 1.838 6.393L4.5 27.5l6.281-1.31A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm7.02 16.87c-.293.827-1.454 1.51-2.394 1.712-.638.137-1.47.246-4.27-.916-3.582-1.484-5.888-5.107-6.067-5.344-.174-.238-1.454-1.936-1.454-3.694s.914-2.62 1.239-2.978c.325-.357.71-.446.947-.446.238 0 .476.002.683.012.22.01.517-.083.808.617.293.71.994 2.448 1.08 2.626.089.178.148.386.03.624-.119.238-.178.386-.354.594-.178.208-.372.464-.531.623-.178.178-.363.372-.156.73.208.357.923 1.522 1.982 2.465 1.362 1.214 2.51 1.591 2.868 1.77.357.178.564.148.771-.09.208-.238.888-1.034 1.125-1.39.238-.357.475-.298.803-.178.327.119 2.08.98 2.436 1.158.357.178.594.267.682.416.089.148.089.858-.204 1.686Z"/></svg></a>
 </body>
 </html>
+
+
+
+
+
