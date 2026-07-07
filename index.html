@@ -91,7 +91,7 @@
 
   .nav-links {
     display: flex;
-    gap: 20px;
+    gap: 32px;
     list-style: none;
   }
 
@@ -170,7 +170,7 @@
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.20) 100%);
+    background: linear-gradient(90deg, rgba(10,10,10,.82) 0%, rgba(10,10,10,.55) 45%, rgba(10,10,10,.18) 100%);
     z-index: 2;
     pointer-events: none;
   }
@@ -499,7 +499,8 @@
 
   .facility-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .facility-item { position: relative; height: 240px; background: var(--dark); overflow: hidden; cursor: pointer; border-radius: 4px; }
-  .facility-item .facility-bg { width: 100%; height: 100%; background: linear-gradient(135deg, #161616, #282828); display: flex; align-items: center; justify-content: center; font-size: 56px; opacity: 0.5; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+  .facility-item .facility-bg{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+
   .facility-item:hover .facility-bg { transform: scale(1.08); opacity: 0.7; }
   .facility-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 12px; background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4) 60%, transparent); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; text-align: center; }
 
@@ -802,6 +803,10 @@
     max-width: 1100px;
   }
 }
+
+.whatsapp-float{position:fixed;right:20px;bottom:20px;width:60px;height:60px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;z-index:9999;box-shadow:0 10px 25px rgba(0,0,0,.25);animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+
 </style>
 </head>
 <body>
@@ -820,8 +825,7 @@
     <li><a href="#">Programs</a></li>
     <li><a href="#">Membership</a></li>
     <li><a href="#">Success Stories</a></li>
-    <li><a href="#">Blog</a></li>
-    <li><a href="#">Contact</a></li>
+    
   </ul>
   <div class="nav-right">
     <div class="nav-phone">📞 01711-222-333</div>
@@ -839,8 +843,7 @@
     <li><a href="#">Programs</a></li>
     <li><a href="#">Membership</a></li>
     <li><a href="#">Success Stories</a></li>
-    <li><a href="#">Blog</a></li>
-    <li><a href="#">Contact</a></li>
+    
   </ul>
   <div class="mobile-nav-phone">📞 01711-222-333</div>
   <a class="btn-trial mobile-btn-trial" href="#">FREE TRIAL BOOK →</a>
@@ -1003,24 +1006,13 @@
     <p>Spacious, clean, fully air-conditioned gym with modern equipment and everything you need for the best workout experience.</p>
     <a class="btn-primary" href="#">TAKE A VIRTUAL TOUR ▶</a>
   </div>
-  <div class="facility-grid">
-    <div class="facility-item">
-      <div class="facility-bg">🏋️</div>
-      <div class="facility-label">Modern Equipment</div>
-    </div>
-    <div class="facility-item">
-      <div class="facility-bg">🏃</div>
-      <div class="facility-label">Spacious Floor</div>
-    </div>
-    <div class="facility-item">
-      <div class="facility-bg">❤️</div>
-      <div class="facility-label">Cardio Zone</div>
-    </div>
-    <div class="facility-item">
-      <div class="facility-bg">🚿</div>
-      <div class="facility-label">Locker & Shower</div>
-    </div>
-  </div>
+  
+<div class="facility-grid">
+<div class="facility-item"><img class="facility-bg" src="modern-equipment.webp" alt="Modern Equipment"><div class="facility-label">Modern Equipment</div></div>
+<div class="facility-item"><img class="facility-bg" src="spacious-workout-floor.webp" alt="Workout Floor"><div class="facility-label">Workout Floor</div></div>
+<div class="facility-item"><img class="facility-bg" src="cardio-zone.webp" alt="Cardio Zone"><div class="facility-label">Cardio Zone</div></div>
+<div class="facility-item"><img class="facility-bg" src="locker-shower.webp" alt="Locker & Shower"><div class="facility-label">Locker & Shower</div></div>
+</div>
 </section>
 
 <div class="membership-outer">
@@ -1237,5 +1229,6 @@
   });
 </script>
 
+<a class="whatsapp-float" href="https://wa.me/8801711222333" target="_blank" aria-label="WhatsApp">💬</a>
 </body>
 </html>
