@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You – Apex Fitness Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5B800;
+    --gold-dark: #d9a200;
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --gray: #888888;
+    --light-gray: #f9f9f9;
+    --text: #cccccc;
+    --premium-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ============================================================
+     MOBILE-FIRST BASE (default = phones)
+     ============================================================ */
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 15% 20%, rgba(245,184,0,0.08), transparent 55%),
+                radial-gradient(circle at 85% 80%, rgba(245,184,0,0.06), transparent 55%);
+    pointer-events: none;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    flex-shrink: 0;
+  }
+
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-text span:first-child {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    color: var(--white);
+    letter-spacing: 1.5px;
+  }
+  .logo-text span:last-child {
+    font-size: 8px;
+    color: var(--gray);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .thanks-card {
+    background: var(--white);
+    color: var(--black);
+    border-radius: 14px;
+    padding: 28px 20px 24px;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--premium-shadow);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Success icon: gold circular checkmark */
+  .success-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffd23f, var(--gold) 60%, var(--gold-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(245,184,0,0.35);
+  }
+  .success-icon svg { width: 28px; height: 28px; }
+
+  .thanks-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 6px;
+  }
+
+  .thanks-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    color: var(--black);
+    overflow-wrap: break-word;
+  }
+
+  .thanks-sub {
+    font-size: 14.5px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .thanks-details {
+    background: var(--light-gray);
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 22px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .detail-icon {
+    width: 34px;
+    height: 34px;
+    background: rgba(245,184,0,0.12);
+    border: 1px solid rgba(245,184,0,0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .detail-text strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 2px;
+  }
+
+  .detail-text span {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .detail-divider {
+    height: 1px;
+    background: #e6e6e6;
+    margin: 0;
+  }
+
+  .thanks-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-primary, .btn-outline-dark, .btn-ghost {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px 20px;
+    min-height: 50px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 14.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+  }
+  .btn-primary:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245,184,0,0.35); }
+
+  .btn-outline-dark {
+    border: 1.5px solid #ddd;
+    color: var(--black);
+    background: var(--white);
+  }
+  .btn-outline-dark:hover { border-color: var(--black); background: var(--light-gray); }
+
+  .btn-ghost {
+    border: none;
+    background: transparent;
+    color: var(--gray);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13.5px;
+    min-height: auto;
+    padding: 8px;
+    margin-top: 2px;
+  }
+  .btn-ghost:hover { color: var(--black); }
+
+  /* ============================================================
+     DESKTOP / LARGER SCREENS
+     ============================================================ */
+  @media (min-width: 600px) {
+    body { padding: 32px; }
+    .logo { margin-bottom: 36px; }
+    .logo-icon { width: 38px; height: 38px; font-size: 18px; }
+    .logo-text span:first-child { font-size: 20px; letter-spacing: 2px; }
+    .logo-text span:last-child { font-size: 9px; letter-spacing: 3px; }
+
+    .thanks-card { padding: 48px 44px; border-radius: 16px; }
+
+    .success-icon { width: 68px; height: 68px; margin-bottom: 20px; }
+    .success-icon svg { width: 34px; height: 34px; }
+
+    .thanks-eyebrow { font-size: 14px; margin-bottom: 8px; }
+    .thanks-title { font-size: 28px; margin-bottom: 14px; }
+    .thanks-sub { font-size: 15px; margin-bottom: 28px; }
+
+    .thanks-details { padding: 20px 22px; margin-bottom: 30px; gap: 16px; }
+    .detail-text strong { font-size: 14px; }
+    .detail-text span { font-size: 13.5px; }
+
+    .thanks-btns { gap: 12px; }
+    .btn-primary, .btn-outline-dark { font-size: 15px; padding: 16px 24px; }
+  }
+</style>
+</head>
+<body>
+
+  <a href="index.html" class="logo">
+    <div class="logo-icon">A</div>
+    <div class="logo-text">
+      <span>APEX</span>
+      <span>FITNESS CLUB</span>
+    </div>
+  </a>
+
+  <div class="thanks-card">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+    </div>
+
+    <div class="thanks-eyebrow">Thank You!</div>
+    <h1 class="thanks-title">Your Free Trial Request<br>Has Been Received</h1>
+    <p class="thanks-sub">We've successfully received your free trial request. A fitness advisor will contact you during business hours to confirm your visit.</p>
+
+    <div class="thanks-details">
+      <div class="detail-row">
+        <div class="detail-icon">📍</div>
+        <div class="detail-text">
+          <strong>Apex Fitness Club</strong>
+          <span>Dhanmondi, Dhaka</span>
+        </div>
+      </div>
+      <div class="detail-divider"></div>
+      <div class="detail-row">
+        <div class="detail-icon">🕒</div>
+        <div class="detail-text">
+          <strong>Opening Hours</strong>
+          <span>Saturday – Thursday<br>6:00 AM – 11:00 PM</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="thanks-btns">
+      <a class="btn-outline-dark" href="tel:+8801711222333">📞 Call Gym</a>
+      <a class="btn-primary" href="https://wa.me/8801711222333" target="_blank" rel="noopener">💬 WhatsApp Us</a>
+      <a class="btn-ghost" href="index.html">← Back to Homepage</a>
+    </div>
+  </div>
+
+</body>
+</html>
