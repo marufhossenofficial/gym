@@ -761,6 +761,47 @@
     .footer-grid { grid-template-columns: 1fr; gap: 28px; }
     .footer-logo { grid-column: span 1; }
   }
+  /* Desktop scale adjustment */
+@media (min-width: 1025px) and (max-width: 1600px) {
+
+  body{
+    font-size: 95%;
+  }
+
+  nav{
+    height: 66px;
+    padding: 0 30px;
+  }
+
+  .hero{
+    min-height: 580px;
+  }
+
+  .hero-content{
+    max-width: 1100px;
+    padding: 60px 30px;
+  }
+
+  .hero h1{
+    font-size: 60px;
+    max-width: 650px;
+  }
+
+  .hero p{
+    font-size: 17px;
+  }
+
+  .stats-bar,
+  .transformations,
+  .why-choose,
+  .facility,
+  .membership,
+  .reviews,
+  .faq-cta-wrap,
+  .footer-inner{
+    max-width: 1100px;
+  }
+}
 </style>
 </head>
 <body>
