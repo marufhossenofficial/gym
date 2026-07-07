@@ -23,6 +23,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   [id] { scroll-margin-top: 88px; }
 
   body {
@@ -1075,6 +1076,184 @@
 @keyframes pulse{0%{box-shadow:0 12px 30px rgba(37,211,102,.4), 0 0 0 0 rgba(37,211,102,.4)}70%{box-shadow:0 12px 30px rgba(37,211,102,.4), 0 0 0 14px rgba(37,211,102,0)}100%{box-shadow:0 12px 30px rgba(37,211,102,.4), 0 0 0 0 rgba(37,211,102,0)}}
 @media (max-width:767px){.whatsapp-float{right:16px;bottom:108px}}
 
+/* ============================================================
+   BOOK YOUR FREE TRIAL SECTION
+   ============================================================ */
+.book-trial-section {
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+  padding: 90px 40px;
+}
+.book-trial-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 20%, rgba(245,184,0,0.07), transparent 55%),
+              radial-gradient(circle at 85% 80%, rgba(245,184,0,0.05), transparent 55%);
+  pointer-events: none;
+}
+.book-trial-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.book-trial-info .section-label { color: var(--gray); text-align: left; }
+.book-trial-info .section-title { color: var(--white); text-align: left; margin-bottom: 14px; }
+.book-trial-sub {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 420px;
+}
+.book-trial-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245,184,0,0.1);
+  border: 1px solid rgba(245,184,0,0.3);
+  color: var(--gold);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 9px 16px;
+  border-radius: 100px;
+  margin-bottom: 32px;
+}
+.book-trial-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.book-trial-perk {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #e0e0e0;
+  font-weight: 500;
+}
+.book-trial-perk-icon {
+  width: 34px;
+  height: 34px;
+  background: rgba(245,184,0,0.12);
+  border: 1px solid rgba(245,184,0,0.3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
+.book-trial-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 40px 40px 36px;
+  box-shadow: var(--premium-shadow);
+  position: relative;
+}
+.book-trial-card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--black);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.book-trial-card-sub {
+  font-size: 13.5px;
+  color: var(--gray);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.book-trial-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--black);
+}
+.book-trial-field em { color: #e5484d; font-style: normal; }
+.book-trial-field small { color: var(--gray); font-weight: 500; }
+.book-trial-field input,
+.book-trial-field select,
+.book-trial-field textarea {
+  border: 1.5px solid #e2e2e2;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  color: var(--black);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+.book-trial-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.book-trial-field textarea { resize: none; min-height: 64px; font-family: 'Barlow', sans-serif; }
+.book-trial-field input:focus,
+.book-trial-field select:focus,
+.book-trial-field textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(245,184,0,0.15);
+}
+.book-trial-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.book-trial-card .btn-primary {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+  border-radius: 6px;
+}
+.book-trial-privacy {
+  font-size: 11.5px;
+  color: var(--gray);
+  text-align: center;
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .book-trial-section { padding: 70px 24px; }
+  .book-trial-inner { grid-template-columns: 1fr; gap: 40px; }
+  .book-trial-info .section-title,
+  .book-trial-info .section-label { text-align: center; }
+  .book-trial-sub { margin: 0 auto 20px; text-align: center; }
+  .book-trial-badge { display: flex; width: fit-content; margin: 0 auto 28px; }
+  .book-trial-perks { display: none; }
+  .book-trial-card { padding: 30px 24px 26px; }
+}
+
+@media (max-width: 480px) {
+  .book-trial-section { padding: 56px 16px; }
+  .book-trial-card { padding: 26px 18px 22px; border-radius: 8px; }
+  .book-trial-card-title { font-size: 20px; }
+  .book-trial-row { grid-template-columns: 1fr; gap: 0; }
+  .book-trial-field { margin-bottom: 12px; }
+  .book-trial-field input, .book-trial-field select, .book-trial-field textarea { padding: 11px 12px; font-size: 13.5px; }
+}
+
 </style>
 </head>
 <body>
@@ -1097,7 +1276,7 @@
   </ul>
   <div class="nav-right">
     <div class="nav-phone">📞 01711-222-333</div>
-    <a class="btn-trial js-book-trigger" href="#">FREE TRIAL BOOK →</a>
+    <a class="btn-trial" href="#book-trial">FREE TRIAL BOOK →</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -1114,7 +1293,7 @@
     
   </ul>
   <div class="mobile-nav-phone">📞 01711-222-333</div>
-  <a class="btn-trial mobile-btn-trial js-book-trigger" href="#">FREE TRIAL BOOK →</a>
+  <a class="btn-trial mobile-btn-trial" href="#book-trial">FREE TRIAL BOOK →</a>
 </div>
 
 <section class="hero" id="home">
@@ -1126,7 +1305,7 @@
     <h1>Dhaka's <span class="highlight">Most Trusted</span> Fitness Community</h1>
     <p>Join 1,200+ members transforming their health with expert coaching, premium equipment, and a supportive fitness community.</p>
     <div class="hero-btns">
-      <a class="btn-primary js-book-trigger" href="#">BOOK FREE TRIAL →</a>
+      <a class="btn-primary" href="#book-trial">BOOK FREE TRIAL →</a>
       <a class="btn-outline" href="#results">▶ SEE MEMBER RESULTS</a>
     </div>
   </div>
@@ -1410,7 +1589,7 @@
   <div class="cta-panel">
     <h2>Your Future Self Is <span class="highlight">Waiting</span></h2>
     <p>আজকে decision নিন। কাল result আপনার হবে। দেরি নয়, আজই শুরু করুন আপনার transformation journey.</p>
-    <a class="btn-primary js-book-trigger" href="#">BOOK FREE TRIAL NOW →</a>
+    <a class="btn-primary" href="#book-trial">BOOK FREE TRIAL NOW →</a>
     <div class="cta-badges">
       <div class="cta-badge">
         <div class="cta-badge-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
@@ -1423,6 +1602,71 @@
     </div>
   </div>
 </div>
+
+<section class="book-trial-section" id="book-trial">
+  <div class="book-trial-inner">
+    <div class="book-trial-info">
+      <div class="section-label">Get Started Today</div>
+      <h2 class="section-title">Book Your <span class="highlight">Free Trial</span></h2>
+      <p class="book-trial-sub">Experience our gym before committing to a membership.</p>
+      <div class="book-trial-badge">✓ Takes less than 30 seconds</div>
+      <div class="book-trial-perks">
+        <div class="book-trial-perk">
+          <div class="book-trial-perk-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
+          No Joining Fee — For Trial Visit
+        </div>
+        <div class="book-trial-perk">
+          <div class="book-trial-perk-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11l3 3 8-8"></path><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"></path></svg></div>
+          No Pressure — Just Guidance
+        </div>
+        <div class="book-trial-perk">
+          <div class="book-trial-perk-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></div>
+          Apex Fitness Club, Dhanmondi
+        </div>
+      </div>
+    </div>
+
+    <div class="book-trial-card">
+      <div class="book-trial-card-title">Reserve Your Spot</div>
+      <p class="book-trial-card-sub">Fill in your details and our team will call you shortly to confirm.</p>
+      <form action="#book-trial" method="get">
+        <label class="book-trial-field">
+          <span>Full Name <em>*</em></span>
+          <input type="text" name="name" required placeholder="e.g. Rahim Uddin" autocomplete="name">
+        </label>
+        <label class="book-trial-field">
+          <span>Mobile Number <em>*</em></span>
+          <input type="tel" name="phone" required placeholder="01XXXXXXXXX" inputmode="tel" autocomplete="tel">
+        </label>
+        <div class="book-trial-row">
+          <label class="book-trial-field">
+            <span>Fitness Goal</span>
+            <select name="goal">
+              <option value="Weight Loss">Weight Loss</option>
+              <option value="Muscle Gain">Muscle Gain</option>
+              <option value="General Fitness">General Fitness</option>
+              <option value="Improve Strength">Improve Strength</option>
+            </select>
+          </label>
+          <label class="book-trial-field">
+            <span>Preferred Time</span>
+            <select name="time">
+              <option value="Morning">Morning (6 AM – 11 AM)</option>
+              <option value="Afternoon">Afternoon (11 AM – 4 PM)</option>
+              <option value="Evening">Evening (4 PM – 11 PM)</option>
+            </select>
+          </label>
+        </div>
+        <label class="book-trial-field">
+          <span>Anything you'd like our trainer to know? <small>(Optional)</small></span>
+          <textarea name="notes" rows="2" placeholder="e.g. I'm a beginner, I have knee pain, or I want to lose 10 kg."></textarea>
+        </label>
+        <button type="submit" class="btn-primary">Reserve My Free Trial →</button>
+      </form>
+      <p class="book-trial-privacy">We'll call you shortly to confirm your free trial. No payment required.</p>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="footer-inner">
@@ -1862,14 +2106,9 @@
 
 <div class="mobile-sticky-bar">
   <a class="sticky-call" href="tel:+8801711222333"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call Now</a>
-  <a class="sticky-book js-book-trigger" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Book Free Trial</a>
+  <a class="sticky-book" href="#book-trial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Book Free Trial</a>
 </div>
 
 <a class="whatsapp-float" href="https://wa.me/8801711222333" target="_blank" aria-label="Chat on WhatsApp"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16.004 3C9.376 3 4 8.373 4 15c0 2.348.674 4.54 1.838 6.393L4.5 27.5l6.281-1.31A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm7.02 16.87c-.293.827-1.454 1.51-2.394 1.712-.638.137-1.47.246-4.27-.916-3.582-1.484-5.888-5.107-6.067-5.344-.174-.238-1.454-1.936-1.454-3.694s.914-2.62 1.239-2.978c.325-.357.71-.446.947-.446.238 0 .476.002.683.012.22.01.517-.083.808.617.293.71.994 2.448 1.08 2.626.089.178.148.386.03.624-.119.238-.178.386-.354.594-.178.208-.372.464-.531.623-.178.178-.363.372-.156.73.208.357.923 1.522 1.982 2.465 1.362 1.214 2.51 1.591 2.868 1.77.357.178.564.148.771-.09.208-.238.888-1.034 1.125-1.39.238-.357.475-.298.803-.178.327.119 2.08.98 2.436 1.158.357.178.594.267.682.416.089.148.089.858-.204 1.686Z"/></svg></a>
 </body>
 </html>
-
-
-
-
-
